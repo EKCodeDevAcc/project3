@@ -5,14 +5,18 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 
+from .models import Menu
+
 # Create your views here.
 def index(request):
-    if request.user.is_authenticated:
-        return render(request, 'orders/index.html')
-    return render(request, 'orders/login.html')
+    if not request.user.is_authenticated:
+        return render(request, 'orders/login.html')
+    return render(request, 'orders/index.html')
 
 # Sign Up Page.
 def signUp(request):
+    if request.user.is_authenticated:
+        return render(request, 'orders/index.html', {'message': 'To sign up, you have to logout first.'})
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -27,7 +31,9 @@ def signUp(request):
 
 
 # Login Page.
-def loginPost(request):
+def loginView(request):
+    if request.user.is_authenticated:
+        return render(request, 'orders/index.html', {'message': 'You already login.'})
     username = request.POST.get('username')
     password = request.POST.get('password')
     user = authenticate(request, username=username, password=password)
@@ -39,6 +45,21 @@ def loginPost(request):
 
 
 # Logout
-def logoutPost(request):
+def logoutView(request):
     logout(request)
-    return render(request, "orders/login.html", {"message": "Logged out."})
+    return render(request, 'orders/login.html', {'message': 'You are logged out successfully.'})
+
+
+# Menu Page.
+def menuView(request):
+    if not request.user.is_authenticated:
+        return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    regular_pizza_menu = Menu.objects.filter(menu_type='Regular Pizza', menu_size='Small').only('menu_name')
+    regular_pizza_small = Menu.objects.filter(menu_type='Regular Pizza', menu_size='Small').only('menu_price')
+    regular_pizza_large = Menu.objects.filter(menu_type='Regular Pizza', menu_size='Large').only('menu_price')
+    context = {
+        'regular_pizza_menus' : regular_pizza_menu,
+        'regular_pizza_smalls': regular_pizza_small,
+        'regular_pizza_larges': regular_pizza_large
+    }
+    return render(request, 'orders/menu.html', context)

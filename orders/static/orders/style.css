@@ -1,0 +1,54 @@
+#title_welcome {
+    width: 50%;
+    display: block;
+    float: left;
+}
+
+#logout_button {
+    margin-top: 10px;
+    display: block;
+    float: right;
+}
+
+#menu {
+    background-color: #dc3545;
+    border-radius: 15px;
+    margin-top: 30px;
+    width: 100%;
+    float: right;
+}
+
+#menu_table {
+   margin: auto;
+   width: 100% !important;
+}
+
+#menu_table_tr {
+    height: 60px;
+    width: 100%;
+    display: block;
+    float: left;
+}
+
+#menu_table_td {
+    width: 33%;
+    display: block;
+    float: left;
+    text-align: center;
+    margin-top: 15px;
+}
+
+#menu_button{
+    color: white;
+    font-weight: bold;
+}
+
+#body_content{
+    margin-top: 60px;
+}
+
+.body_table_small{
+    width: 33%;
+    display: block;
+    float: left;
+}

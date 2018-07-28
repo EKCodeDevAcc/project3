@@ -9,8 +9,15 @@
 {% endif %}
 <form action="{% url 'login' %}" method="post">
     {% csrf_token %}
-    <input name="username" type="text"/>
-    <input name="password" type="password"/>
-    <input type="submit" value="Login"/>
+    <div class="content_item">
+        <input name="username" type="text" placeholder="username"/>
+    </div>
+    <div class="content_item">
+        <input name="password" type="password" placeholder="password"/>
+    </div>
+    <div class="content_item">
+        <input type="submit" value="Login"/>
+        <input type="button" value="Sign Up" onclick="location.href = '/signUp'"/>
+    </div>
 </form>
 {% endblock %}

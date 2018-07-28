@@ -1,0 +1,68 @@
+{% extends "orders/layout.html" %}
+
+{% block body %}
+<div class="form-group">
+    <div class="content_item">
+        <h2 id="title_welcome">Welcome, {{ user.username }}</h2>
+        <input id="logout_button" class="btn btn-success" type="button" value="Logout" onclick="location.href = '/logout'"/>
+    </div>
+    <div id="menu">
+        <table id="menu_table">
+            <tr id="menu_table_tr">
+                <td id="menu_table_td">
+                    <a id="menu_button" href="/">My Profile</a>
+                </td>
+                <td id="menu_table_td">
+                    <a id="menu_button" href="/">Menu</a>
+                </td>
+                <td id="menu_table_td">
+                    <a id="menu_button" href="/">Place Order</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div id="body_content" class="form-group">
+    <div>
+        <div class="body_table">
+            <p>Regular Pizza</p>
+            <div class="body_table_small">
+                <table>
+                    <tr>
+                        <th>Name</th>
+                    </tr>
+                    {% for regular_pizza_menu in regular_pizza_menus %}
+                    <tr>
+                        <td>{{ regular_pizza_menu.menu_name }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="body_table_small">
+                <table>
+                    <tr>
+                        <th>Small</th>
+                    </tr>
+                    {% for regular_pizza_small in regular_pizza_smalls %}
+                    <tr>
+                        <td>$ {{ regular_pizza_small.menu_price }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="body_table_small">
+                <table>
+                    <tr>
+                        <th>Large</th>
+                    </tr>
+                    {% for regular_pizza_large in regular_pizza_larges %}
+                    <tr>
+                        <td>$ {{ regular_pizza_large.menu_price }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
