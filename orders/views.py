@@ -63,3 +63,29 @@ def menuView(request):
         'regular_pizza_larges': regular_pizza_large
     }
     return render(request, 'orders/menu.html', context)
+
+
+# Order Page.
+def orderView(request):
+    if not request.user.is_authenticated:
+        return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    regular_pizza_menu = Menu.objects.filter(menu_type='Regular Pizza', menu_size='Small').only('menu_name')
+    regular_pizza_small = Menu.objects.filter(menu_type='Regular Pizza', menu_size='Small').only('menu_price')
+    regular_pizza_large = Menu.objects.filter(menu_type='Regular Pizza', menu_size='Large').only('menu_price')
+    context = {
+        'regular_pizza_menus' : regular_pizza_menu,
+        'regular_pizza_smalls': regular_pizza_small,
+        'regular_pizza_larges': regular_pizza_large
+    }
+    return render(request, 'orders/order.html', context)
+
+
+# Order Pasta Page.
+def orderPastaView(request):
+    if not request.user.is_authenticated:
+        return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    pasta_menu = Menu.objects.filter(menu_type='Pasta')
+    context = {
+        'pasta_menus' : pasta_menu
+    }
+    return render(request, 'orders/order_pasta.html', context)

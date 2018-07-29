@@ -1,0 +1,50 @@
+{% extends "orders/layout.html" %}
+
+{% block body %}
+<div class="form-group">
+    <div class="content_item">
+        <h2 id="title_welcome">Welcome, {{ user.username }}</h2>
+        <input id="logout_button" class="btn btn-success" type="button" value="Logout" onclick="location.href = '/logout'"/>
+    </div>
+    <div id="menu">
+        <table id="menu_table">
+            <tr id="menu_table_tr">
+                <td id="menu_table_td">
+                    <a id="menu_button" href="/">My Profile</a>
+                </td>
+                <td id="menu_table_td">
+                    <a id="menu_button" href="/menu">Menu</a>
+                </td>
+                <td id="menu_table_td">
+                    <a id="menu_button_select" href="/order">Place Order</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div id="body_content" class="form-group">
+    <div>
+        <div id="order_main">
+            <h2>Pasta</h2>
+            {% for pasta_menu in pasta_menus %}
+            <div id="order_item">
+                <h3>{{ pasta_menu.menu_name }}</h3>
+                <input class="btn btn-success" type="button" value="Select" />
+            </div>
+            {% endfor %}
+        </div>
+        <div id="order_cart">
+            <div id="my_order_menu">
+                <table id="menu_table">
+                    <tr id="menu_table_tr">
+                        <td id="my_order_td"><p id="order_cart_title">My Order</p></td>
+                    </tr>
+                </table>
+            </div>
+            <div id="my_item">
+                <p>Test</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
