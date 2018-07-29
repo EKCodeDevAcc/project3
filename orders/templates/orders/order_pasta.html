@@ -25,11 +25,12 @@
 <div id="body_content" class="form-group">
     <div>
         <div id="order_main">
-            <h2>Pasta</h2>
+            <h2 id="order_title">Pasta</h2>
             {% for pasta_menu in pasta_menus %}
             <div id="order_item">
                 <h3>{{ pasta_menu.menu_name }}</h3>
-                <input class="btn btn-success" type="button" value="Select" />
+                <h3>$ {{ pasta_menu.menu_price }}</h3>
+                <input class="btn btn-success" type="button" value="Select" onclick="addToCart(`{{ pasta_menu.menu_name }}`, `{{ pasta_menu.menu_price }}`)" />
             </div>
             {% endfor %}
         </div>
@@ -41,8 +42,13 @@
                     </tr>
                 </table>
             </div>
+            <div id="check_out_button">
+                <input class="btn btn-danger" type="button" value="Checkout" />
+            </div>
             <div id="my_item">
-                <p>Test</p>
+                {% for my_order in my_orders %}
+                <p>{{ my_order.menu_id }}</p>
+                {% endfor %}
             </div>
         </div>
     </div>

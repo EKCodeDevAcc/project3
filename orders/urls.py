@@ -10,4 +10,5 @@ urlpatterns = [
     path("menu", views.menuView, name="menu"),
     path("order", views.orderView, name="order"),
     path("order/pasta", views.orderPastaView, name="order_pasta"),
+    path("addCart", views.addCart, name="add_cart"),
 ]

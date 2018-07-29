@@ -3,9 +3,9 @@ from django.conf import settings
 
 # Create your models here.
 class Menu(models.Model):
-    menu_type = models.CharField(max_length = 64)
-    menu_name = models.CharField(max_length = 64)
-    menu_size = models.CharField(max_length = 64)
+    menu_type = models.CharField(max_length=64)
+    menu_name = models.CharField(max_length=64)
+    menu_size = models.CharField(blank=True, max_length=64)
     menu_price = models.FloatField()
 
     def __str__(self):
@@ -30,7 +30,7 @@ class SubTopping(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     order_date = models.DateTimeField()
-    status = models.CharField(max_length = 64)
+    status = models.CharField(max_length=64)
     order_price = models.FloatField()
 
     def __str__(self):
@@ -38,12 +38,15 @@ class Order(models.Model):
 
 
 class Item(models.Model):
-    order_id = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="order_id")
+    order_id = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True, related_name="order_id")
+    username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     menu_id = models.ForeignKey(Menu, on_delete=models.CASCADE, related_name="menu_id")
     topping_pizza = models.ManyToManyField(PizzaTopping, blank=True, related_name="topping_pizza")
     topping_sub = models.ManyToManyField(SubTopping, blank=True, related_name="topping_sub")
+    quantity = models.IntegerField()
     price_menu = models.FloatField()
     price_sub_topping = models.FloatField()
+    status = models.CharField(max_length=64)
 
     def __str__(self):
         return f"{self.order_id} {self.menu_id} {self.topping_pizza} {self.topping_sub} {self.price_menu} {self.price_sub_topping}"

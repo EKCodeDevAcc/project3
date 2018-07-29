@@ -103,9 +103,17 @@
     font-size: 25px;
 }
 
+#check_out_button {
+    margin-left: 36%;
+}
+
+#order_title {
+    margin-left: 15px;
+}
 
 #order_item {
-    width: 33%;
+    width: 30%;
     display: block;
     float: left;
+    margin-left: 15px;
 }

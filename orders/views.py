@@ -1,11 +1,11 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import Menu
+from .models import Menu, PizzaTopping, SubTopping, Order, Item
 
 # Create your views here.
 def index(request):
@@ -85,7 +85,16 @@ def orderPastaView(request):
     if not request.user.is_authenticated:
         return render(request, 'orders/login.html', {'message': 'Please login first.'})
     pasta_menu = Menu.objects.filter(menu_type='Pasta')
+    my_order = Item.objects.filter(username=request.user)
     context = {
-        'pasta_menus' : pasta_menu
+        'pasta_menus' : pasta_menu,
+        'my_orders' : my_order
     }
     return render(request, 'orders/order_pasta.html', context)
+
+
+# Add Cart URL
+def addCart(request):
+    item_name = request.GET.get('itemname')
+    item_price = request.GET.get('itemprice')
+    return JsonResponse({'item_name': item_name, 'item_price': item_price})
