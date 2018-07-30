@@ -7,7 +7,7 @@
         {% load static %}
         <link rel="stylesheet" type="text/css" href="{% static 'orders/style.css' %}" />
         <script>
-            function addToCart(item_name, item_price, item_size, item_pizza_topping, item_sub_topping){
+            function addToCart(item_name, item_price, item_size, item_pizza_topping, item_sub_topping) {
                 $.ajax({
                     url: '/addCart',
                     data: {
@@ -34,7 +34,7 @@
                 });
             };
 
-            function removeCart(item_id){
+            function removeCart(item_id) {
                 $.ajax({
                     url: '/removeCart',
                     data: {
@@ -48,9 +48,9 @@
                 });
             };
 
-            function addToppings(){
+            function addPizzaToppings(item_name, item_price, item_size, topping_size) {
                 // Get the modal
-                var modal = document.getElementById('pizzModal');
+                var modal = document.getElementById('pizzaModal');
 
                 // Get the <span> element that closes the modal
                 var span = document.getElementsByClassName("close")[0];
@@ -70,16 +70,33 @@
                     }
                 }
 
-
-                var checked = document.querySelector('.topping_check:checked').value;
+                //If number of checked checkboxes are equal to the number of toppings, deny checking current checkbox
+                $(document).ready(function() {
+                    $('input.topping_check').on('change', function(evt) {
+                        if ($(this).siblings(':checked').length == topping_size) {
+                            this.checked = false;
+                        }
+                    });
+                });
 
                 var select_button = document.querySelector('#topping_complete');
 
-                $(document).ready(function() {
-                    $("input:checkbox[class=topping_check]:checked").each(function(){
-                        console.log($(this).val());
+                select_button.onclick = function() {
+                    var final_toppings = new Array();
+
+                    var checked = document.querySelector('.topping_check:checked').value;
+
+                    $(document).ready(function() {
+                        $("input:checkbox[class=topping_check]:checked").each(function(){
+                            //final_toppings.push($(this).val());
+                            final_toppings = final_toppings + $(this).val() + ', ';
+                        });
                     });
-                });
+                    final_toppings = final_toppings.substring(0, final_toppings.length - 2);
+                    console.log(final_toppings);
+
+                    addToCart(item_name, item_price, item_size, final_toppings, '');
+                }
             }
         </script>
     </head>

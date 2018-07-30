@@ -22,7 +22,7 @@
         </table>
     </div>
 </div>
-<div id="pizzModal" class="modal">
+<div id="pizzaModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
         {% for pizza_topping in pizza_toppings %}
@@ -40,10 +40,7 @@
                 <h3>{{ regular_pizza_menu.menu_name }}</h3>
                 <h3>$ {{ regular_pizza_menu.menu_price }}</h3>
                 <h3>{{ regular_pizza_menu.menu_size }}</h3>
-                <input class="btn btn-success" type="button" value="Select" onclick="addToppings()" />
-                <!--
-                <input class="btn btn-success" type="button" value="Select" onclick="addToCart(`{{ regular_pizza_menu.menu_name }}`, `{{ regular_pizza_menu.menu_price }}`, `{{ regular_pizza_menu.menu_size }}`, ``, ``)" />
-                -->
+                <input class="btn btn-success" type="button" value="Select" onclick="addPizzaToppings(`{{ regular_pizza_menu.menu_name }}`, `{{ regular_pizza_menu.menu_price }}`, `{{ regular_pizza_menu.menu_size }}`, 3)" />
             </div>
             {% endfor %}
         </div>
