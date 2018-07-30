@@ -7,21 +7,28 @@
         {% load static %}
         <link rel="stylesheet" type="text/css" href="{% static 'orders/style.css' %}" />
         <script>
-            function addToCart(item_name, item_price){
+            function addToCart(item_name, item_price, item_size, item_pizza_topping, item_sub_topping){
                 $.ajax({
                     url: '/addCart',
                     data: {
                         itemname: item_name,
-                        itemprice: item_price
+                        itemprice: item_price,
+                        itemsize: item_size,
+                        itempizzatopping: item_pizza_topping,
+                        itemsubtopping: item_sub_topping
                     },
                     success: function(data){
                         const selected_item_name = document.createElement('div');
                         selected_item_name.innerHTML = data.item_name;
 
+                        const selected_item_size = document.createElement('div');
+                        selected_item_size.innerHTML = data.item_size;
+
                         const selected_item_price = document.createElement('div');
                         selected_item_price.innerHTML = data.item_price;
 
                         document.querySelector('#my_item').append(selected_item_name);
+                        document.querySelector('#my_item').append(selected_item_size);
                         document.querySelector('#my_item').append(selected_item_price);
                     }
                 });
@@ -34,10 +41,46 @@
                         itemid: item_id
                     },
                     success: function(data){
-                        console.log(data);
+                        console.log(data.deleted_item_id);
+                        const removeElement = document.getElementById(data.deleted_item_id)
+                        removeElement.parentElement.remove();
                     }
                 });
             };
+
+            function addToppings(){
+                // Get the modal
+                var modal = document.getElementById('pizzModal');
+
+                // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on the button, open the modal
+                modal.style.display = "block";
+
+                // When the user clicks on <span> (x), close the modal
+                span.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+
+
+                var checked = document.querySelector('.topping_check:checked').value;
+
+                var select_button = document.querySelector('#topping_complete');
+
+                $(document).ready(function() {
+                    $("input:checkbox[class=topping_check]:checked").each(function(){
+                        console.log($(this).val());
+                    });
+                });
+            }
         </script>
     </head>
     <body>

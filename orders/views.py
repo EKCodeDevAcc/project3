@@ -80,13 +80,27 @@ def orderView(request):
     return render(request, 'orders/order.html', context)
 
 
+# Order Regular Pizza Page.
+def orderRegularPizzaView(request):
+    if not request.user.is_authenticated:
+        return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    regular_pizza_menu = Menu.objects.filter(menu_type='Regular Pizza')
+    my_order = Item.objects.filter(username=request.user)
+    pizza_topping = PizzaTopping.objects.all()
+    context = {
+        'regular_pizza_menus' : regular_pizza_menu,
+        'pizza_toppings' : pizza_topping,
+        'my_orders' : my_order
+    }
+    return render(request, 'orders/order_regular_pizza.html', context)
+
+
 # Order Pasta Page.
 def orderPastaView(request):
     if not request.user.is_authenticated:
         return render(request, 'orders/login.html', {'message': 'Please login first.'})
     pasta_menu = Menu.objects.filter(menu_type='Pasta')
     my_order = Item.objects.filter(username=request.user)
-    print('HiHiHi')
     context = {
         'pasta_menus' : pasta_menu,
         'my_orders' : my_order
@@ -97,9 +111,14 @@ def orderPastaView(request):
 # Add Cart URL
 def addCart(request):
     item_name = request.GET.get('itemname')
+    item_topping_pizza = request.GET.get('itempizzatopping')
+    item_topping_sub = request.GET.get('itemsubtopping')
+    item_size = request.GET.get('itemsize')
     item_price = request.GET.get('itemprice')
-    item = Item.objects.create(username=request.user, item_menu_name=item_name, item_price=item_price, quantity=1, status='In Cart')
-    return JsonResponse({'item_name': item_name, 'item_price': item_price})
+
+    item = Item.objects.create(username=request.user, item_menu_name=item_name, topping_pizza=item_topping_pizza, topping_sub=item_topping_sub, item_size=item_size, item_price=item_price, item_status='In Cart')
+
+    return JsonResponse({'item_name': item_name, 'topping_pizza': item_topping_pizza, 'topping_sub': item_topping_sub, 'item_size':item_size, 'item_price': item_price})
 
 
 # Remove Cart URL

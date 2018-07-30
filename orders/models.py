@@ -29,11 +29,11 @@ class SubTopping(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     order_date = models.DateTimeField()
-    status = models.CharField(max_length=64)
+    order_status = models.CharField(max_length=64)
     order_price = models.FloatField()
 
     def __str__(self):
-        return f"{self.user} {self.order_date} {self.status} {self.order_price}"
+        return f"{self.user} {self.order_date} {self.order_status} {self.order_price}"
 
 
 class Item(models.Model):
@@ -42,11 +42,13 @@ class Item(models.Model):
     username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     #item_menu_name = models.ForeignKey(Menu, on_delete=models.CASCADE, related_name="item_menu_name")
     item_menu_name = models.CharField(max_length=64)
-    topping_pizza = models.ManyToManyField(PizzaTopping, blank=True, related_name="topping_pizza")
-    topping_sub = models.ManyToManyField(SubTopping, blank=True, related_name="topping_sub")
-    quantity = models.IntegerField()
+    item_size = models.CharField(blank=True, max_length=64)
+    topping_pizza = models.CharField(blank=True, max_length=64)
+    topping_sub = models.CharField(blank=True, max_length=64)
+    # topping_pizza = models.ManyToManyField(PizzaTopping, blank=True, related_name="topping_pizza")
+    # topping_sub = models.ManyToManyField(SubTopping, blank=True, related_name="topping_sub")
     item_price = models.FloatField()
-    status = models.CharField(max_length=64)
+    item_status = models.CharField(max_length=64)
 
     def __str__(self):
-        return f"{self.item_order_id} {self.item_menu_name} {self.topping_pizza} {self.topping_sub} {self.item_price} {self.status}"
+        return f"{self.item_order_id} {self.item_menu_name} {self.topping_pizza} {self.topping_sub} {self.item_price} {self.item_status}"

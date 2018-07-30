@@ -22,16 +22,28 @@
         </table>
     </div>
 </div>
+<div id="pizzModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        {% for pizza_topping in pizza_toppings %}
+        <input type="checkbox" class="topping_check" value="{{ pizza_topping.pizza_topping_name }}">{{ pizza_topping.pizza_topping_name }}
+        {% endfor %}
+        <input id="topping_complete" class="btn btn-success" type="button" value="Select"/>
+    </div>
+</div>
 <div id="body_content" class="form-group">
     <div>
         <div id="order_main">
-            <h2 id="order_title">Pasta</h2>
-            {% for pasta_menu in pasta_menus %}
+            <h2 id="order_title">Regular Pizza</h2>
+            {% for regular_pizza_menu in regular_pizza_menus %}
             <div id="order_item">
-                <h3>{{ pasta_menu.menu_name }}</h3>
-                <h3>$ {{ pasta_menu.menu_price }}</h3>
-                <h3>{{ pasta_menu.menu_size }}</h3>
-                <input class="btn btn-success" type="button" value="Select" onclick="addToCart(`{{ pasta_menu.menu_name }}`, `{{ pasta_menu.menu_price }}`, `{{ pasta_menu.menu_size }}`, ``, ``)" />
+                <h3>{{ regular_pizza_menu.menu_name }}</h3>
+                <h3>$ {{ regular_pizza_menu.menu_price }}</h3>
+                <h3>{{ regular_pizza_menu.menu_size }}</h3>
+                <input class="btn btn-success" type="button" value="Select" onclick="addToppings()" />
+                <!--
+                <input class="btn btn-success" type="button" value="Select" onclick="addToCart(`{{ regular_pizza_menu.menu_name }}`, `{{ regular_pizza_menu.menu_price }}`, `{{ regular_pizza_menu.menu_size }}`, ``, ``)" />
+                -->
             </div>
             {% endfor %}
         </div>
