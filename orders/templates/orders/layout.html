@@ -8,7 +8,6 @@
         <link rel="stylesheet" type="text/css" href="{% static 'orders/style.css' %}" />
         <script>
             function addToCart(item_name, item_price){
-                alert(item_name);
                 $.ajax({
                     url: '/addCart',
                     data: {

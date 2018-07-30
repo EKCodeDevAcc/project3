@@ -21,32 +21,33 @@ class PizzaTopping(models.Model):
 
 class SubTopping(models.Model):
     sub_topping_name = models.CharField(max_length=64)
-    sub_topping_price = models.FloatField()
 
     def __str__(self):
-        return f"{self.sub_topping_name} {self.sub_topping_price}"
+        return f"{self.sub_topping_name}"
 
 
 class Order(models.Model):
+    order_id = models.PositiveIntegerField(primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     order_date = models.DateTimeField()
     status = models.CharField(max_length=64)
     order_price = models.FloatField()
 
     def __str__(self):
-        return f"{self.user} {self.order_date} {self.status} {self.order_price}"
+        return f"{self.order_id} {self.user} {self.order_date} {self.status} {self.order_price}"
 
 
 class Item(models.Model):
-    order_id = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True, related_name="order_id")
+    #item_order_id = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True, related_name="item_order_id")
+    item_order_id = models.PositiveIntegerField(blank=True, null=True)
     username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    menu_id = models.ForeignKey(Menu, on_delete=models.CASCADE, related_name="menu_id")
+    #item_menu_name = models.ForeignKey(Menu, on_delete=models.CASCADE, related_name="item_menu_name")
+    item_menu_name = models.CharField(max_length=64)
     topping_pizza = models.ManyToManyField(PizzaTopping, blank=True, related_name="topping_pizza")
     topping_sub = models.ManyToManyField(SubTopping, blank=True, related_name="topping_sub")
     quantity = models.IntegerField()
-    price_menu = models.FloatField()
-    price_sub_topping = models.FloatField()
+    item_price = models.FloatField()
     status = models.CharField(max_length=64)
 
     def __str__(self):
-        return f"{self.order_id} {self.menu_id} {self.topping_pizza} {self.topping_sub} {self.price_menu} {self.price_sub_topping}"
+        return f"{self.item_order_id} {self.item_menu_name} {self.topping_pizza} {self.topping_sub} {self.item_price} {self.status}"

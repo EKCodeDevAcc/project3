@@ -97,4 +97,5 @@ def orderPastaView(request):
 def addCart(request):
     item_name = request.GET.get('itemname')
     item_price = request.GET.get('itemprice')
+    item = Item.objects.create(username=request.user, item_menu_name=item_name, item_price=item_price, quantity=1, status='In Cart')
     return JsonResponse({'item_name': item_name, 'item_price': item_price})

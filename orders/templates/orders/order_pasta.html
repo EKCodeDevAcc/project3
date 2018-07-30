@@ -46,9 +46,14 @@
                 <input class="btn btn-danger" type="button" value="Checkout" />
             </div>
             <div id="my_item">
-                {% for my_order in my_orders %}
-                <p>{{ my_order.menu_id }}</p>
-                {% endfor %}
+                <table class="table">
+                    {% for my_order in my_orders %}
+                    <tr>
+                        <td>{{ my_order.item_menu_name }}</td>
+                        <td>$ {{ my_order.item_price }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
             </div>
         </div>
     </div>
