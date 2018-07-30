@@ -27,14 +27,13 @@ class SubTopping(models.Model):
 
 
 class Order(models.Model):
-    order_id = models.PositiveIntegerField(primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     order_date = models.DateTimeField()
     status = models.CharField(max_length=64)
     order_price = models.FloatField()
 
     def __str__(self):
-        return f"{self.order_id} {self.user} {self.order_date} {self.status} {self.order_price}"
+        return f"{self.user} {self.order_date} {self.status} {self.order_price}"
 
 
 class Item(models.Model):

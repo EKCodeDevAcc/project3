@@ -26,6 +26,18 @@
                     }
                 });
             };
+
+            function removeCart(item_id){
+                $.ajax({
+                    url: '/removeCart',
+                    data: {
+                        itemid: item_id
+                    },
+                    success: function(data){
+                        console.log(data);
+                    }
+                });
+            };
         </script>
     </head>
     <body>

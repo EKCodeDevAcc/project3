@@ -51,6 +51,9 @@
                     <tr>
                         <td>{{ my_order.item_menu_name }}</td>
                         <td>$ {{ my_order.item_price }}</td>
+                        <td>
+                            <input class="btn btn-btn btn-secondary" type="button" value="Remove" onclick="removeCart(`{{ my_order.id }}`)" />
+                        </td>
                     </tr>
                     {% endfor %}
                 </table>

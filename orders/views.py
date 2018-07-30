@@ -86,6 +86,7 @@ def orderPastaView(request):
         return render(request, 'orders/login.html', {'message': 'Please login first.'})
     pasta_menu = Menu.objects.filter(menu_type='Pasta')
     my_order = Item.objects.filter(username=request.user)
+    print('HiHiHi')
     context = {
         'pasta_menus' : pasta_menu,
         'my_orders' : my_order
@@ -99,3 +100,10 @@ def addCart(request):
     item_price = request.GET.get('itemprice')
     item = Item.objects.create(username=request.user, item_menu_name=item_name, item_price=item_price, quantity=1, status='In Cart')
     return JsonResponse({'item_name': item_name, 'item_price': item_price})
+
+
+# Remove Cart URL
+def removeCart(request):
+    item_id = request.GET.get('itemid')
+    Item.objects.get(id=item_id).delete()
+    return JsonResponse({'deleted_item_id': item_id})
