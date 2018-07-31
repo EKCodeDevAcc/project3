@@ -69,6 +69,7 @@
     border-style: solid;
     border-color: #218838;
     border-radius: 18px;
+    overflow: auto;
 }
 
 #order_cart {
@@ -79,6 +80,7 @@
     border-style: solid;
     border-color: #218838;
     border-radius: 18px;
+    overflow: auto;
 }
 
 #my_order_menu {
@@ -198,6 +200,11 @@
 #total_price {
     text-align: center;
     margin-top: 50px;
+}
+
+
+#all_orders {
+    width: 100%;
 }
 
 /* menu buttons, hover? */

@@ -1,0 +1,64 @@
+{% extends "orders/layout.html" %}
+
+{% block body %}
+<div class="form-group">
+    <div class="content_item">
+        <h2 id="title_welcome">Welcome, {{ user.username }}</h2>
+        <input id="logout_button" class="btn btn-success" type="button" value="Logout" onclick="location.href = '/logout'"/>
+    </div>
+    <div id="menu">
+        <table id="menu_table">
+            <tr id="menu_table_tr">
+                <td id="menu_table_td">
+                    <a id="menu_button" href="/">My Profile</a>
+                </td>
+                <td id="menu_table_td">
+                    <a id="menu_button" href="/menu">Menu</a>
+                </td>
+                <td id="menu_table_td">
+                    <a id="menu_button_select" href="/order">Place Order</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div id="body_content" class="form-group">
+    <div>
+        <div id="order_main">
+            <h2 id="order_title">A List of Orders</h2>
+            <div>
+                <div id="all_orders">
+                    <h4>{{ all_order.item_type }}</h4>
+                    <table class="table">
+                        <tr>
+                            <th>User</th>
+                            <th>Order Date</th>
+                            <th>Total Price</th>
+                            <th>Order Status</th>
+                        </tr>
+                        {% for all_order in all_orders %}
+                        <tr>
+                            <td>{{ all_order.user }}</td>
+                            <td>{{ all_order.order_date }}</td>
+                            <td>{{ all_order.order_price }}</td>
+                            <td>{{ all_order.order_status }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="checkout_item_right">
+                </div>
+                <div id="{{ my_order.id }}"></div>
+            </div>
+        </div>
+        <div id="order_cart">
+            <div>
+                <p id="total_price">Your total is ${{ total_price }}.</p>
+            </div>
+            <div id="checkout_button">
+                <input class="btn btn-danger" type="button" value="Place Order" onclick="checkoutCart(`{{ total_price }}`)"/>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

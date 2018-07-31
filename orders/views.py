@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import user_passes_test
 import datetime
 
 from .models import Menu, PizzaTopping, SubTopping, Order, Item
@@ -178,3 +179,16 @@ def checkoutView(request):
     }
     return render(request, 'orders/checkout.html', context)
 
+
+# Admin Order Page
+# Limited to superuser
+@user_passes_test(lambda user: user.is_superuser)
+def adminOrderView(request):
+    if not request.user.is_authenticated:
+        return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    all_order = Order.objects.filter(order_status='Order Placed')
+
+    context = {
+        'all_orders' : all_order
+    }
+    return render(request, 'orders/admin_order.html', context)
