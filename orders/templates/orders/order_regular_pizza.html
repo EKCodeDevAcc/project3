@@ -28,6 +28,7 @@
         {% for pizza_topping in pizza_toppings %}
         <input type="checkbox" class="topping_check" value="{{ pizza_topping.pizza_topping_name }}">{{ pizza_topping.pizza_topping_name }}
         {% endfor %}
+        <p id="total_topping_length" style="display: none;">{{ pizza_topping_length }}</p>
         <input id="topping_complete" class="btn btn-success" type="button" value="Select"/>
     </div>
 </div>
@@ -36,11 +37,11 @@
         <div id="order_main">
             <h2 id="order_title">Regular Pizza</h2>
             {% for regular_pizza_menu in regular_pizza_menus %}
-            <div id="order_item">
+            <div class="order_item">
                 <h3>{{ regular_pizza_menu.menu_name }}</h3>
                 <h3>$ {{ regular_pizza_menu.menu_price }}</h3>
                 <h3>{{ regular_pizza_menu.menu_size }}</h3>
-                <input class="btn btn-success" type="button" value="Select" onclick="addPizzaToppings(`{{ regular_pizza_menu.menu_name }}`, `{{ regular_pizza_menu.menu_price }}`, `{{ regular_pizza_menu.menu_size }}`, 3)" />
+                <input class="btn btn-success" type="button" value="Select" onclick="addPizzaToppings(`{{ regular_pizza_menu.menu_name }}`, `{{ regular_pizza_menu.menu_price }}`, `{{ regular_pizza_menu.menu_size }}`, `{{ regular_pizza_menu.menu_topping_number }}`)" />
             </div>
             {% endfor %}
         </div>
@@ -58,15 +59,17 @@
             <div id="my_item">
                 {% for my_order in my_orders %}
                 <div>
-                    <div>
+                    <div class="my_item_list_left">
                         <div>{{ my_order.item_menu_name }}</div>
                         <div>{{ my_order.topping_pizza }}</div>
                         <div>{{ my_order.topping_sub }}</div>
                     </div>
-                    <div>
+                    <div class="my_item_list_right">
                         <div>{{ my_order.item_size }}</div>
                         <div>$ {{ my_order.item_price }}</div>
-                        <div><input class="btn btn-btn btn-secondary" type="button" value="Remove" onclick="removeCart(`{{ my_order.id }}`)" /></div>
+                    </div>
+                    <div class="my_item_remove">
+                        <input class="btn btn-btn btn-secondary" type="button" value="Remove" onclick="removeCart(`{{ my_order.id }}`)" />
                     </div>
                     <div id="{{ my_order.id }}"></div>
                     <hr>

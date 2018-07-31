@@ -5,11 +5,12 @@ from django.conf import settings
 class Menu(models.Model):
     menu_type = models.CharField(max_length=64)
     menu_name = models.CharField(max_length=64)
+    menu_topping_number = models.IntegerField()
     menu_size = models.CharField(blank=True, max_length=64)
     menu_price = models.FloatField()
 
     def __str__(self):
-        return f"{self.menu_type} {self.menu_name} {self.menu_size} {self.menu_price}"
+        return f"{self.menu_type} {self.menu_name} {self.menu_topping_number} {self.menu_size} {self.menu_price}"
 
 
 class PizzaTopping(models.Model):
@@ -37,10 +38,8 @@ class Order(models.Model):
 
 
 class Item(models.Model):
-    #item_order_id = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True, related_name="item_order_id")
     item_order_id = models.PositiveIntegerField(blank=True, null=True)
     username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    #item_menu_name = models.ForeignKey(Menu, on_delete=models.CASCADE, related_name="item_menu_name")
     item_menu_name = models.CharField(max_length=64)
     item_size = models.CharField(blank=True, max_length=64)
     topping_pizza = models.CharField(blank=True, max_length=64)

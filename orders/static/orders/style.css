@@ -111,10 +111,32 @@
     margin-left: 15px;
 }
 
-#order_item {
+.order_item {
     width: 30%;
     display: block;
     float: left;
+    margin-left: 15px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.my_item_list_left {
+    display: block;
+    float: left;
+    width: 70%;
+    margin-left: 15px;
+}
+
+.my_item_list_right {
+    display: block;
+    float: right;
+    width: 20%;
+    margin-left: 15px;
+}
+
+.my_item_remove {
+    display: block;
+    width: 90%;
     margin-left: 15px;
 }
 

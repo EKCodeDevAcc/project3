@@ -57,7 +57,9 @@
                     <div>
                         <div>{{ my_order.item_size }}</div>
                         <div>$ {{ my_order.item_price }}</div>
-                        <div><input class="btn btn-btn btn-secondary" type="button" value="Remove" onclick="removeCart(`{{ my_order.id }}`)" /></div>
+                    </div>
+                    <div>
+                        <input class="btn btn-btn btn-secondary" type="button" value="Remove" onclick="removeCart(`{{ my_order.id }}`)" />
                     </div>
                     <div id="{{ my_order.id }}"></div>
                     <hr>

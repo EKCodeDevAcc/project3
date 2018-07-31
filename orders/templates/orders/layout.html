@@ -5,9 +5,11 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
         {% load static %}
+        <script type="text/javascript" src="{% static 'orders/index.js' %}" /></script>
         <link rel="stylesheet" type="text/css" href="{% static 'orders/style.css' %}" />
         <script>
             function addToCart(item_name, item_price, item_size, item_pizza_topping, item_sub_topping) {
+                console.log('inside addToCart');
                 $.ajax({
                     url: '/addCart',
                     data: {
@@ -18,7 +20,8 @@
                         itemsubtopping: item_sub_topping
                     },
                     success: function(data){
-                        const selected_item_name = document.createElement('div');
+                        location.reload();
+                        /*const selected_item_name = document.createElement('div');
                         selected_item_name.innerHTML = data.item_name;
 
                         const selected_item_size = document.createElement('div');
@@ -29,7 +32,7 @@
 
                         document.querySelector('#my_item').append(selected_item_name);
                         document.querySelector('#my_item').append(selected_item_size);
-                        document.querySelector('#my_item').append(selected_item_price);
+                        document.querySelector('#my_item').append(selected_item_price);*/
                     }
                 });
             };
@@ -61,12 +64,14 @@
                 // When the user clicks on <span> (x), close the modal
                 span.onclick = function() {
                     modal.style.display = "none";
+                    location.reload();
                 }
 
                 // When the user clicks anywhere outside of the modal, close it
                 window.onclick = function(event) {
                     if (event.target == modal) {
                         modal.style.display = "none";
+                        location.reload();
                     }
                 }
 
@@ -80,20 +85,30 @@
                 });
 
                 var select_button = document.querySelector('#topping_complete');
+                var total_topping_length = document.querySelector('#total_topping_length').innerHTML;
 
                 select_button.onclick = function() {
-                    var final_toppings = new Array();
+                    var unchecked_length = $("input:checkbox[class=topping_check]:not(:checked)").length;
+                    var checked_length = total_topping_length - unchecked_length;
 
-                    var checked = document.querySelector('.topping_check:checked').value;
+                    if (topping_size > 0) {
+                        if (checked_length != topping_size) {
+                            alert("Please select " + topping_size + " toppings.");
+                        } else {
+                            var final_toppings = new Array();
+                            var checked = document.querySelector('.topping_check:checked').value;
 
-                    $(document).ready(function() {
-                        $("input:checkbox[class=topping_check]:checked").each(function(){
-                            //final_toppings.push($(this).val());
-                            final_toppings = final_toppings + $(this).val() + ', ';
-                        });
-                    });
-                    final_toppings = final_toppings.substring(0, final_toppings.length - 2);
-                    console.log(final_toppings);
+                            $(document).ready(function() {
+                                $("input:checkbox[class=topping_check]:checked").each(function(){
+                                    //final_toppings.push($(this).val());
+                                    final_toppings = final_toppings + $(this).val() + ', ';
+                                });
+                            });
+                            final_toppings = final_toppings.substring(0, final_toppings.length - 2);
+                        }
+                    } else {
+                        final_toppings = "";
+                    }
 
                     addToCart(item_name, item_price, item_size, final_toppings, '');
                 }

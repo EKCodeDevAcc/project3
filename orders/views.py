@@ -87,9 +87,11 @@ def orderRegularPizzaView(request):
     regular_pizza_menu = Menu.objects.filter(menu_type='Regular Pizza')
     my_order = Item.objects.filter(username=request.user)
     pizza_topping = PizzaTopping.objects.all()
+    pizza_topping_length = PizzaTopping.objects.all().count()
     context = {
         'regular_pizza_menus' : regular_pizza_menu,
         'pizza_toppings' : pizza_topping,
+        'pizza_topping_length' : pizza_topping_length,
         'my_orders' : my_order
     }
     return render(request, 'orders/order_regular_pizza.html', context)
