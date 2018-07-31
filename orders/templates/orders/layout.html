@@ -8,11 +8,12 @@
         <script type="text/javascript" src="{% static 'orders/index.js' %}" /></script>
         <link rel="stylesheet" type="text/css" href="{% static 'orders/style.css' %}" />
         <script>
-            function addToCart(item_name, item_price, item_size, item_pizza_topping, item_sub_topping) {
+            function addToCart(item_type, item_name, item_price, item_size, item_pizza_topping, item_sub_topping) {
                 console.log('inside addToCart');
                 $.ajax({
                     url: '/addCart',
                     data: {
+                        itemtype: item_type,
                         itemname: item_name,
                         itemprice: item_price,
                         itemsize: item_size,
@@ -21,6 +22,16 @@
                     },
                     success: function(data){
                         location.reload();
+
+                        /*const my_item_list_left = document.createAttribute('div');
+                        my_item_list_left.className = 'my_item_list_left';
+
+                        const item_menu_name = document.createAttribute('div');
+                        item_menu_name.innerHTML = data.item_name;
+                        $(my_item_list_left).append(item_menu_name);
+
+                        document.querySelector('#my_item').append(my_item_list_left)*/
+
                         /*const selected_item_name = document.createElement('div');
                         selected_item_name.innerHTML = data.item_name;
 
@@ -41,17 +52,34 @@
                 $.ajax({
                     url: '/removeCart',
                     data: {
-                        itemid: item_id
+                        itemid: item_id,
                     },
                     success: function(data){
-                        console.log(data.deleted_item_id);
-                        const removeElement = document.getElementById(data.deleted_item_id)
+                        location.reload();
+                        /*const removeElement = document.getElementById(data.deleted_item_id)
                         removeElement.parentElement.remove();
+
+                        document.querySelector('#total_price').innerHTML = data.total_price;*/
                     }
                 });
             };
 
-            function addPizzaToppings(item_name, item_price, item_size, topping_size) {
+            function checkoutCart(order_price){
+                var float_price = parseFloat(order_price).toFixed(2);
+
+                $.ajax({
+                    url: '/checkoutCart',
+                    data: {
+                        orderprice: float_price,
+                    },
+                    success: function(data){
+                        alert("Thank you for choosing Pinocchio's Pizza & Subs!");
+                        window.location = "/";
+                    }
+                });
+            };
+
+            function addPizzaToppings(item_type, item_name, item_price, item_size, topping_size) {
                 // Get the modal
                 var modal = document.getElementById('pizzaModal');
 
@@ -110,7 +138,7 @@
                         final_toppings = "";
                     }
 
-                    addToCart(item_name, item_price, item_size, final_toppings, '');
+                    addToCart(item_type, item_name, item_price, item_size, final_toppings, '');
                 }
             }
         </script>

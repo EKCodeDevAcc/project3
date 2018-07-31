@@ -103,11 +103,11 @@
     font-size: 25px;
 }
 
-#check_out_button {
+#checkout_button {
     margin-left: 36%;
 }
 
-#order_title {
+#order_title, #checkout_title {
     margin-left: 15px;
 }
 
@@ -169,5 +169,35 @@
     font-weight: bold;
 }
 
+#checkout_main {
+    width: 100%;
+    height: 700px;
+    display: block;
+    float: left;
+    border-style: solid;
+    border-color: #218838;
+    border-radius: 18px;
+}
+
+.checkout_item_left {
+    width: 55%;
+    display: block;
+    float: left;
+    margin-left: 15px;
+    margin-top: 15px;
+}
+
+.checkout_item_right {
+    width: 15%;
+    display: block;
+    float: left;
+    margin-left: 15px;
+    margin-top: 15px;
+}
+
+#total_price {
+    text-align: center;
+    margin-top: 50px;
+}
 
 /* menu buttons, hover? */

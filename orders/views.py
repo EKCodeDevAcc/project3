@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
+import datetime
 
 from .models import Menu, PizzaTopping, SubTopping, Order, Item
 
@@ -85,7 +86,7 @@ def orderRegularPizzaView(request):
     if not request.user.is_authenticated:
         return render(request, 'orders/login.html', {'message': 'Please login first.'})
     regular_pizza_menu = Menu.objects.filter(menu_type='Regular Pizza')
-    my_order = Item.objects.filter(username=request.user)
+    my_order = Item.objects.filter(username=request.user, item_status='In Cart')
     pizza_topping = PizzaTopping.objects.all()
     pizza_topping_length = PizzaTopping.objects.all().count()
     context = {
@@ -112,13 +113,14 @@ def orderPastaView(request):
 
 # Add Cart URL
 def addCart(request):
+    item_type = request.GET.get('itemtype')
     item_name = request.GET.get('itemname')
     item_topping_pizza = request.GET.get('itempizzatopping')
     item_topping_sub = request.GET.get('itemsubtopping')
     item_size = request.GET.get('itemsize')
     item_price = request.GET.get('itemprice')
 
-    item = Item.objects.create(username=request.user, item_menu_name=item_name, topping_pizza=item_topping_pizza, topping_sub=item_topping_sub, item_size=item_size, item_price=item_price, item_status='In Cart')
+    item = Item.objects.create(username=request.user, item_type=item_type, item_menu_name=item_name, topping_pizza=item_topping_pizza, topping_sub=item_topping_sub, item_size=item_size, item_price=item_price, item_status='In Cart')
 
     return JsonResponse({'item_name': item_name, 'topping_pizza': item_topping_pizza, 'topping_sub': item_topping_sub, 'item_size':item_size, 'item_price': item_price})
 
@@ -127,4 +129,52 @@ def addCart(request):
 def removeCart(request):
     item_id = request.GET.get('itemid')
     Item.objects.get(id=item_id).delete()
-    return JsonResponse({'deleted_item_id': item_id})
+    my_order = Item.objects.filter(username=request.user, item_status='In Cart')
+    order_length = Item.objects.filter(username=request.user, item_status='In Cart').count()
+
+    total_price = 0
+    for i in range(order_length):
+            total_price += my_order[i].item_price
+
+    round_price = round(total_price, 2)
+    two_decimal = "{:.2f}".format(round_price)
+
+    return JsonResponse({'deleted_item_id': item_id, 'total_price': two_decimal})
+
+
+# Checkout Cart URL
+def checkoutCart(request):
+    order_price = request.GET.get('orderprice')
+    # now = datetime.datetime.now().strftime('%H:%M:%S')
+    now = datetime.datetime.now()
+    print('Now: ')
+    print(now)
+    order = Order.objects.create(user=request.user, order_date=now, order_status='Order Placed', order_price=order_price)
+    lastest_order = Order.objects.latest('id')
+    order_id = lastest_order.id
+    print(order_id)
+    item = Item.objects.filter(username=request.user, item_status='In Cart').update(item_order_id=order_id, item_status='Complete')
+
+    return JsonResponse({'order_stats': 'Complete'})
+
+
+# Checkout Page
+def checkoutView(request):
+    if not request.user.is_authenticated:
+        return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    my_order = Item.objects.filter(username=request.user, item_status='In Cart')
+    order_length = Item.objects.filter(username=request.user, item_status='In Cart').count()
+
+    total_price = 0
+    for i in range(order_length):
+            total_price += my_order[i].item_price
+
+    round_price = round(total_price, 2)
+    two_decimal = "{:.2f}".format(round_price)
+
+    context = {
+        'my_orders' : my_order,
+        'total_price': two_decimal
+    }
+    return render(request, 'orders/checkout.html', context)
+

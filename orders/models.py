@@ -41,6 +41,7 @@ class Item(models.Model):
     item_order_id = models.PositiveIntegerField(blank=True, null=True)
     username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     item_menu_name = models.CharField(max_length=64)
+    item_type = models.CharField(max_length=64)
     item_size = models.CharField(blank=True, max_length=64)
     topping_pizza = models.CharField(blank=True, max_length=64)
     topping_sub = models.CharField(blank=True, max_length=64)
@@ -50,4 +51,4 @@ class Item(models.Model):
     item_status = models.CharField(max_length=64)
 
     def __str__(self):
-        return f"{self.item_order_id} {self.item_menu_name} {self.topping_pizza} {self.topping_sub} {self.item_price} {self.item_status}"
+        return f"{self.item_order_id} {self.item_menu_name} {self.item_type} {self.topping_pizza} {self.topping_sub} {self.item_price} {self.item_status}"

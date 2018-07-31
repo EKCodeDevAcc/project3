@@ -38,10 +38,11 @@
             <h2 id="order_title">Regular Pizza</h2>
             {% for regular_pizza_menu in regular_pizza_menus %}
             <div class="order_item">
-                <h3>{{ regular_pizza_menu.menu_name }}</h3>
-                <h3>$ {{ regular_pizza_menu.menu_price }}</h3>
-                <h3>{{ regular_pizza_menu.menu_size }}</h3>
-                <input class="btn btn-success" type="button" value="Select" onclick="addPizzaToppings(`{{ regular_pizza_menu.menu_name }}`, `{{ regular_pizza_menu.menu_price }}`, `{{ regular_pizza_menu.menu_size }}`, `{{ regular_pizza_menu.menu_topping_number }}`)" />
+                <h4>{{ regular_pizza_menu.menu_name }}</h4>
+                <h4>{{ regular_pizza_menu.menu_size }}</h4>
+                <h4>$ {{ regular_pizza_menu.menu_price }}</h4>
+                <input class="btn btn-success" type="button" value="Select" onclick="addPizzaToppings(`{{ regular_pizza_menu.menu_type }}`,
+                `{{ regular_pizza_menu.menu_name }}`, `{{ regular_pizza_menu.menu_price }}`, `{{ regular_pizza_menu.menu_size }}`, `{{ regular_pizza_menu.menu_topping_number }}`)" />
             </div>
             {% endfor %}
         </div>
@@ -53,8 +54,8 @@
                     </tr>
                 </table>
             </div>
-            <div id="check_out_button">
-                <input class="btn btn-danger" type="button" value="Checkout" />
+            <div id="checkout_button">
+                <input class="btn btn-danger" type="button" value="Checkout" onclick="window.location='/order/checkout';" />
             </div>
             <div id="my_item">
                 {% for my_order in my_orders %}

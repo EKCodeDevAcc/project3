@@ -11,6 +11,8 @@ urlpatterns = [
     path("order", views.orderView, name="order"),
     path("order/regularPizza", views.orderRegularPizzaView, name="order_regular_pizza"),
     path("order/pasta", views.orderPastaView, name="order_pasta"),
+    path("order/checkout", views.checkoutView, name="checkout"),
     path("addCart", views.addCart, name="add_cart"),
     path("removeCart", views.removeCart, name="remove_cart"),
+    path("checkoutCart", views.checkoutCart, name="checkout_cart")
 ]

@@ -1,0 +1,56 @@
+{% extends "orders/layout.html" %}
+
+{% block body %}
+<div class="form-group">
+    <div class="content_item">
+        <h2 id="title_welcome">Welcome, {{ user.username }}</h2>
+        <input id="logout_button" class="btn btn-success" type="button" value="Logout" onclick="location.href = '/logout'"/>
+    </div>
+    <div id="menu">
+        <table id="menu_table">
+            <tr id="menu_table_tr">
+                <td id="menu_table_td">
+                    <a id="menu_button" href="/">My Profile</a>
+                </td>
+                <td id="menu_table_td">
+                    <a id="menu_button" href="/menu">Menu</a>
+                </td>
+                <td id="menu_table_td">
+                    <a id="menu_button_select" href="/order">Place Order</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div id="body_content" class="form-group">
+    <div>
+        <div id="order_main">
+            <h2 id="order_title">Checkout</h2>
+            {% for my_order in my_orders %}
+            <div>
+                <div class="checkout_item_left">
+                    <h4>{{ my_order.item_type }}</h4>
+                    <h4>{{ my_order.item_menu_name }}</h4>
+                    <h4>{{ my_order.topping_pizza }}</h4>
+                    <h4>{{ my_order.topping_sub }}</h4>
+                </div>
+                <div class="checkout_item_right">
+                    <h4>{{ my_order.item_size }}</h4>
+                    <h4>$ {{ my_order.item_price }}</h4>
+                    <input class="btn btn-btn btn-secondary" type="button" value="Remove" onclick="removeCart(`{{ my_order.id }}`)" />
+                </div>
+                <div id="{{ my_order.id }}"></div>
+            </div>
+            {% endfor %}
+        </div>
+        <div id="order_cart">
+            <div>
+                <p id="total_price">Your total is ${{ total_price }}.</p>
+            </div>
+            <div id="checkout_button">
+                <input class="btn btn-danger" type="button" value="Place Order" onclick="checkoutCart(`{{ total_price }}`)"/>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
