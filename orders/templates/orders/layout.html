@@ -140,6 +140,36 @@
 
                     addToCart(item_type, item_name, item_price, item_size, final_toppings, '');
                 }
+            };
+
+            function changeOrderStatus(order_status, order_length) {
+                var unchecked_length = $("input:checkbox[class=change_order_status]:not(:checked)").length;
+                var checked_length = order_length - unchecked_length;
+
+                if (checked_length > 0) {
+                    var final_orders = new Array();
+                    var checked = document.querySelector('.change_order_status:checked').value;
+
+                    $(document).ready(function() {
+                        $("input:checkbox[class=change_order_status]:checked").each(function(){
+                            final_orders = final_orders + $(this).val() + ', ';
+                        });
+                    });
+                    final_orders = final_orders.substring(0, final_orders.length - 2);
+
+                    $.ajax({
+                        url: '/changeOrderStatus',
+                        data: {
+                            orderstatus: order_status,
+                            finalorders: final_orders
+                        },
+                        success: function(data){
+                            location.reload();
+                        }
+                    });
+                } else {
+                    alert("Please select at least one item to change its status!");
+                }
             }
         </script>
     </head>

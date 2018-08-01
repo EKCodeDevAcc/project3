@@ -59,10 +59,22 @@ def menuView(request):
     regular_pizza_menu = Menu.objects.filter(menu_type='Regular Pizza', menu_size='Small').only('menu_name')
     regular_pizza_small = Menu.objects.filter(menu_type='Regular Pizza', menu_size='Small').only('menu_price')
     regular_pizza_large = Menu.objects.filter(menu_type='Regular Pizza', menu_size='Large').only('menu_price')
+    sicilian_pizza_menu = Menu.objects.filter(menu_type='Sicilian Pizza', menu_size='Small').only('menu_name')
+    sicilian_pizza_small = Menu.objects.filter(menu_type='Sicilian Pizza', menu_size='Small').only('menu_price')
+    sicilian_pizza_large = Menu.objects.filter(menu_type='Sicilian Pizza', menu_size='Large').only('menu_price')
+    subs_menu = Menu.objects.filter(menu_type='Subs', menu_size='Large').only('menu_name')
+    subs_small = Menu.objects.filter(menu_type='Subs', menu_size='Small').only('menu_price')
+    subs_large = Menu.objects.filter(menu_type='Subs', menu_size='Large').only('menu_price')
     context = {
         'regular_pizza_menus' : regular_pizza_menu,
-        'regular_pizza_smalls': regular_pizza_small,
-        'regular_pizza_larges': regular_pizza_large
+        'regular_pizza_smalls' : regular_pizza_small,
+        'regular_pizza_larges' : regular_pizza_large,
+        'sicilian_pizza_menus' : sicilian_pizza_menu,
+        'sicilian_pizza_smalls' : sicilian_pizza_small,
+        'sicilian_pizza_larges' : sicilian_pizza_large,
+        'subs_menus' : subs_menu,
+        'subs_smalls' : subs_small,
+        'subs_larges' : subs_large
     }
     return render(request, 'orders/menu.html', context)
 
@@ -187,8 +199,23 @@ def adminOrderView(request):
     if not request.user.is_authenticated:
         return render(request, 'orders/login.html', {'message': 'Please login first.'})
     all_order = Order.objects.filter(order_status='Order Placed')
+    order_length = Order.objects.filter(order_status='Order Placed').count()
 
     context = {
-        'all_orders' : all_order
+        'all_orders' : all_order,
+        'order_length' : order_length
     }
     return render(request, 'orders/admin_order.html', context)
+
+
+# Change Order Status URL
+def changeOrderStatus(request):
+    order_status = request.GET.get('orderstatus')
+    final_orders = request.GET.get('finalorders')
+
+    id_list = [id.strip() for id in final_orders.split(',')]
+
+    for i in range(len(id_list)):
+        Order.objects.filter(id=id_list[i]).update(order_status='Delivered')
+
+    return JsonResponse({'order_stats': 'Complete'})

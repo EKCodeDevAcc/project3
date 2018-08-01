@@ -35,6 +35,7 @@
                             <th>Order Date</th>
                             <th>Total Price</th>
                             <th>Order Status</th>
+                            <th>C</th>
                         </tr>
                         {% for all_order in all_orders %}
                         <tr>
@@ -42,6 +43,7 @@
                             <td>{{ all_order.order_date }}</td>
                             <td>{{ all_order.order_price }}</td>
                             <td>{{ all_order.order_status }}</td>
+                            <td><input type="checkbox" class="change_order_status" value="{{ all_order.id }}"></td>
                         </tr>
                         {% endfor %}
                     </table>
@@ -53,10 +55,10 @@
         </div>
         <div id="order_cart">
             <div>
-                <p id="total_price">Your total is ${{ total_price }}.</p>
+                <p id="total_price">Change Order Status to Delievered</p>
             </div>
             <div id="checkout_button">
-                <input class="btn btn-danger" type="button" value="Place Order" onclick="checkoutCart(`{{ total_price }}`)"/>
+                <input class="btn btn-danger" type="button" value="Change" onclick="changeOrderStatus(`Delievered`, `{{ order_length }}`)"/>
             </div>
         </div>
     </div>
