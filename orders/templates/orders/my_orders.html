@@ -10,7 +10,7 @@
         <table id="menu_table">
             <tr id="menu_table_tr">
                 <td id="menu_table_td">
-                    <a id="menu_button" href="/myOrders">My Orders</a>
+                    <a id="menu_button_select" href="/myOrders">My Orders</a>
                 </td>
                 <td id="menu_table_td">
                     <a id="menu_button" href="/menu">Menu</a>
@@ -51,19 +51,17 @@
                     <h4>{{ all_order.item_type }}</h4>
                     <table class="table">
                         <tr>
-                            <th>User</th>
                             <th>Order Date</th>
                             <th>Total Price</th>
                             <th>Order Status</th>
-                            <th>Check</th>
+                            <th>Details</th>
                         </tr>
-                        {% for all_order in all_orders %}
+                        {% for my_order in my_orders %}
                         <tr>
-                            <td>{{ all_order.user }}</td>
-                            <td>{{ all_order.order_date }}</td>
-                            <td>$ {{ all_order.order_price }}</td>
-                            <td>{{ all_order.order_status }}</td>
-                            <td><input type="checkbox" class="change_order_status" value="{{ all_order.id }}"></td>
+                            <td>{{ my_order.order_date }}</td>
+                            <td>$ {{ my_order.order_price }}</td>
+                            <td>{{ my_order.order_status }}</td>
+                            <td><input class="btn btn-success" type="button" value="Check" onclick="selectOrderDetails(`{{ my_order.id }}`)" /></td>
                         </tr>
                         {% endfor %}
                     </table>

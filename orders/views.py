@@ -5,6 +5,8 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import user_passes_test
+from django.core import serializers
+
 import datetime
 
 from .models import Menu, PizzaTopping, SubTopping, Order, Item
@@ -65,6 +67,13 @@ def menuView(request):
     subs_menu = Menu.objects.filter(menu_type='Subs', menu_size='Large').only('menu_name')
     subs_small = Menu.objects.filter(menu_type='Subs', menu_size='Small').only('menu_price')
     subs_large = Menu.objects.filter(menu_type='Subs', menu_size='Large').only('menu_price')
+    pasta_menu = Menu.objects.filter(menu_type='Pasta').only('menu_name')
+    pasta_price = Menu.objects.filter(menu_type='Pasta').only('menu_price')
+    salads_menu = Menu.objects.filter(menu_type='Salads').only('menu_name')
+    salads_price = Menu.objects.filter(menu_type='Salads').only('menu_price')
+    dinner_platters_menu = Menu.objects.filter(menu_type='Dinner Platters', menu_size='Large').only('menu_name')
+    dinner_platters_small = Menu.objects.filter(menu_type='Dinner Platters', menu_size='Small').only('menu_price')
+    dinner_platters_large = Menu.objects.filter(menu_type='Dinner Platters', menu_size='Large').only('menu_price')
     context = {
         'regular_pizza_menus' : regular_pizza_menu,
         'regular_pizza_smalls' : regular_pizza_small,
@@ -74,7 +83,14 @@ def menuView(request):
         'sicilian_pizza_larges' : sicilian_pizza_large,
         'subs_menus' : subs_menu,
         'subs_smalls' : subs_small,
-        'subs_larges' : subs_large
+        'subs_larges' : subs_large,
+        'pasta_menus' : pasta_menu,
+        'pasta_prices' : pasta_price,
+        'salads_menus' : salads_menu,
+        'salads_prices' : salads_price,
+        'dinner_platters_menus' : dinner_platters_menu,
+        'dinner_platters_smalls' : dinner_platters_small,
+        'dinner_platters_larges' : dinner_platters_large
     }
     return render(request, 'orders/menu.html', context)
 
@@ -158,15 +174,11 @@ def removeCart(request):
 # Checkout Cart URL
 def checkoutCart(request):
     order_price = request.GET.get('orderprice')
-    # now = datetime.datetime.now().strftime('%H:%M:%S')
     now = datetime.datetime.now()
-    print('Now: ')
-    print(now)
     order = Order.objects.create(user=request.user, order_date=now, order_status='Order Placed', order_price=order_price)
     lastest_order = Order.objects.latest('id')
     order_id = lastest_order.id
-    print(order_id)
-    item = Item.objects.filter(username=request.user, item_status='In Cart').update(item_order_id=order_id, item_status='Complete')
+    item = Item.objects.filter(username=request.user, item_status='In Cart').update(item_order_id=order_id, item_status='Order Placed')
 
     return JsonResponse({'order_stats': 'Complete'})
 
@@ -217,5 +229,29 @@ def changeOrderStatus(request):
 
     for i in range(len(id_list)):
         Order.objects.filter(id=id_list[i]).update(order_status='Delivered')
+        Item.objects.filter(item_order_id=id_list[i]).update(item_status='Delivered')
 
     return JsonResponse({'order_stats': 'Complete'})
+
+
+# Checkout Page
+def myOrdersView(request):
+    if not request.user.is_authenticated:
+        return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    my_order = Order.objects.filter(user=request.user)
+
+    context = {
+        'my_orders' : my_order
+    }
+    return render(request, 'orders/my_orders.html', context)
+
+
+# Order Details URL
+def orderDetails(request):
+    order_id = request.GET.get('orderid')
+    order_item = Item.objects.filter(item_order_id=order_id)
+    order_item_length = Item.objects.filter(item_order_id=order_id).count()
+
+    order_item_response = serializers.serialize("json", order_item)
+
+    return HttpResponse(order_item_response, content_type='application/json')

@@ -39,7 +39,7 @@
     margin-top: 15px;
 }
 
-#menu_button{
+#menu_button {
     color: white;
     font-weight: bold;
 }
@@ -50,8 +50,15 @@
     font-weight: bold;
 }
 
-#body_content{
+#body_content {
     margin-top: 60px;
+}
+
+.body_table_content {
+    margin-bottom: 40px;
+    display: block;
+    float: left;
+    width: 100%;
 }
 
 .body_table_small{
@@ -205,6 +212,12 @@
 
 #all_orders {
     width: 100%;
+}
+
+
+.total_cost {
+    float: right;
+    margin-right: 80px;
 }
 
 /* menu buttons, hover? */

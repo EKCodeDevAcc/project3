@@ -10,7 +10,7 @@
         <table id="menu_table">
             <tr id="menu_table_tr">
                 <td id="menu_table_td">
-                    <a id="menu_button" href="/">My Profile</a>
+                    <a id="menu_button" href="/myOrders">My Orders</a>
                 </td>
                 <td id="menu_table_td">
                     <a id="menu_button_select" href="/menu">Menu</a>
@@ -26,120 +26,215 @@
     <div>
         <h2>Menu</h2>
         <div class="body_table">
-            <h4>Regular Pizza</h4>
-            <div class="body_table_small">
-                <table>
-                    <tr>
-                        <th>Name</th>
-                    </tr>
-                    {% for regular_pizza_menu in regular_pizza_menus %}
-                    <tr>
-                        <td>{{ regular_pizza_menu.menu_name }}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
+            <div class="body_table_content">
+                <h4>Regular Pizza</h4>
+                <div class="body_table_small">
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                        </tr>
+                        {% for regular_pizza_menu in regular_pizza_menus %}
+                        <tr>
+                            <td>{{ regular_pizza_menu.menu_name }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="body_table_small">
+                    <table>
+                        <tr>
+                            <th>Small</th>
+                        </tr>
+                        {% for regular_pizza_small in regular_pizza_smalls %}
+                        <tr>
+                            <td>$ {{ regular_pizza_small.menu_price }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="body_table_small">
+                    <table>
+                        <tr>
+                            <th>Large</th>
+                        </tr>
+                        {% for regular_pizza_large in regular_pizza_larges %}
+                        <tr>
+                            <td>$ {{ regular_pizza_large.menu_price }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
-            <div class="body_table_small">
-                <table>
-                    <tr>
-                        <th>Small</th>
-                    </tr>
-                    {% for regular_pizza_small in regular_pizza_smalls %}
-                    <tr>
-                        <td>$ {{ regular_pizza_small.menu_price }}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
+            <div class="body_table_content">
+                <h4>Sicilian Pizza</h4>
+                <div class="body_table_small">
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                        </tr>
+                        {% for sicilian_pizza_menu in sicilian_pizza_menus %}
+                        <tr>
+                            <td>{{ sicilian_pizza_menu.menu_name }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="body_table_small">
+                    <table>
+                        <tr>
+                            <th>Small</th>
+                        </tr>
+                        {% for sicilian_pizza_small in sicilian_pizza_smalls %}
+                        <tr>
+                            <td>$ {{ sicilian_pizza_small.menu_price }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="body_table_small">
+                    <table>
+                        <tr>
+                            <th>Large</th>
+                        </tr>
+                        {% for sicilian_pizza_large in sicilian_pizza_larges %}
+                        <tr>
+                            <td>$ {{ sicilian_pizza_large.menu_price }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
-            <div class="body_table_small">
-                <table>
-                    <tr>
-                        <th>Large</th>
-                    </tr>
-                    {% for regular_pizza_large in regular_pizza_larges %}
-                    <tr>
-                        <td>$ {{ regular_pizza_large.menu_price }}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
+            <div class="body_table_content">
+                <h4>Subs</h4>
+                <div class="body_table_small">
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                        </tr>
+                        {% for subs_menu in subs_menus %}
+                        <tr>
+                            <td>{{ subs_menu.menu_name }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="body_table_small">
+                    <table>
+                        <tr>
+                            <th>Small</th>
+                        </tr>
+                        {% for subs_small in subs_smalls %}
+                        <tr>
+                            <td>$ {{ subs_small.menu_price }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="body_table_small">
+                    <table>
+                        <tr>
+                            <th>Large</th>
+                        </tr>
+                        {% for subs_large in subs_larges %}
+                        <tr>
+                            <td>$ {{ subs_large.menu_price }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
-            <!-- -->
-            <br>
-            <h4>Sicilian Pizza</h4>
-            <div class="body_table_small">
-                <table>
-                    <tr>
-                        <th>Name</th>
-                    </tr>
-                    {% for sicilian_pizza_menu in sicilian_pizza_menus %}
-                    <tr>
-                        <td>{{ sicilian_pizza_menu.menu_name }}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
+            <div class="body_table_content">
+                <h4>Pasta</h4>
+                <div class="body_table_small">
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                        </tr>
+                        {% for pasta_menu in pasta_menus %}
+                        <tr>
+                            <td>{{ pasta_menu.menu_name }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="body_table_small">
+                    <table>
+                        <tr>
+                            <th>Price</th>
+                        </tr>
+                        {% for pasta_price in pasta_prices %}
+                        <tr>
+                            <td>$ {{ pasta_price.menu_price }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
-            <div class="body_table_small">
-                <table>
-                    <tr>
-                        <th>Small</th>
-                    </tr>
-                    {% for sicilian_pizza_small in sicilian_pizza_smalls %}
-                    <tr>
-                        <td>$ {{ sicilian_pizza_small.menu_price }}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
+            <div class="body_table_content">
+                <h4>Salads</h4>
+                <div class="body_table_small">
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                        </tr>
+                        {% for salads_menu in salads_menus %}
+                        <tr>
+                            <td>{{ salads_menu.menu_name }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="body_table_small">
+                    <table>
+                        <tr>
+                            <th>Price</th>
+                        </tr>
+                        {% for salads_price in salads_prices %}
+                        <tr>
+                            <td>$ {{ salads_price.menu_price }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
-            <div class="body_table_small">
-                <table>
-                    <tr>
-                        <th>Large</th>
-                    </tr>
-                    {% for sicilian_pizza_large in sicilian_pizza_larges %}
-                    <tr>
-                        <td>$ {{ sicilian_pizza_large.menu_price }}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
-            </div>
-            <!-- -->
-            <br>
-            <h4>Subs</h4>
-            <div class="body_table_small">
-                <table>
-                    <tr>
-                        <th>Name</th>
-                    </tr>
-                    {% for subs_menu in subs_menus %}
-                    <tr>
-                        <td>{{ subs_menu.menu_name }}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
-            </div>
-            <div class="body_table_small">
-                <table>
-                    <tr>
-                        <th>Small</th>
-                    </tr>
-                    {% for subs_small in subs_smalls %}
-                    <tr>
-                        <td>$ {{ subs_small.menu_price }}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
-            </div>
-            <div class="body_table_small">
-                <table>
-                    <tr>
-                        <th>Large</th>
-                    </tr>
-                    {% for subs_large in subs_larges %}
-                    <tr>
-                        <td>$ {{ subs_large.menu_price }}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
+            <div class="body_table_content">
+                <h4>Dinner Platters</h4>
+                <div class="body_table_small">
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                        </tr>
+                        {% for dinner_platters_menu in dinner_platters_menus %}
+                        <tr>
+                            <td>{{ dinner_platters_menu.menu_name }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="body_table_small">
+                    <table>
+                        <tr>
+                            <th>Small</th>
+                        </tr>
+                        {% for dinner_platters_small in dinner_platters_smalls %}
+                        <tr>
+                            <td>$ {{ dinner_platters_small.menu_price }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="body_table_small">
+                    <table>
+                        <tr>
+                            <th>Large</th>
+                        </tr>
+                        {% for dinner_platters_large in dinner_platters_larges %}
+                        <tr>
+                            <td>$ {{ dinner_platters_large.menu_price }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
         </div>
     </div>
