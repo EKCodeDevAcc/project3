@@ -54,6 +54,29 @@ def logoutView(request):
     return render(request, 'orders/login.html', {'message': 'You are logged out successfully.'})
 
 
+# Checkout Page
+def myOrdersView(request):
+    if not request.user.is_authenticated:
+        return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    my_order = Order.objects.filter(user=request.user)
+
+    context = {
+        'my_orders' : my_order
+    }
+    return render(request, 'orders/my_orders.html', context)
+
+
+# Order Details URL
+def orderDetails(request):
+    order_id = request.GET.get('orderid')
+    order_item = Item.objects.filter(item_order_id=order_id)
+    order_item_length = Item.objects.filter(item_order_id=order_id).count()
+
+    order_item_response = serializers.serialize("json", order_item)
+
+    return HttpResponse(order_item_response, content_type='application/json')
+
+
 # Menu Page.
 def menuView(request):
     if not request.user.is_authenticated:
@@ -268,7 +291,7 @@ def checkoutView(request):
     return render(request, 'orders/checkout.html', context)
 
 
-# Admin Order Page
+# Admin Order Placed Page
 # Limited to superuser
 @user_passes_test(lambda user: user.is_superuser)
 def adminOrderView(request):
@@ -284,6 +307,21 @@ def adminOrderView(request):
     return render(request, 'orders/admin_order.html', context)
 
 
+# Admin Order Delivered Page
+@user_passes_test(lambda user: user.is_superuser)
+def adminOrderDeliveredView(request):
+    if not request.user.is_authenticated:
+        return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    all_order = Order.objects.filter(order_status='Delivered')
+    order_length = Order.objects.filter(order_status='Delivered').count()
+
+    context = {
+        'all_orders' : all_order,
+        'order_length' : order_length
+    }
+    return render(request, 'orders/admin_order_done.html', context)
+
+
 # Change Order Status URL
 def changeOrderStatus(request):
     order_status = request.GET.get('orderstatus')
@@ -292,30 +330,7 @@ def changeOrderStatus(request):
     id_list = [id.strip() for id in final_orders.split(',')]
 
     for i in range(len(id_list)):
-        Order.objects.filter(id=id_list[i]).update(order_status='Delivered')
-        Item.objects.filter(item_order_id=id_list[i]).update(item_status='Delivered')
+        Order.objects.filter(id=id_list[i]).update(order_status=order_status)
+        Item.objects.filter(item_order_id=id_list[i]).update(item_status=order_status)
 
     return JsonResponse({'order_stats': 'Complete'})
-
-
-# Checkout Page
-def myOrdersView(request):
-    if not request.user.is_authenticated:
-        return render(request, 'orders/login.html', {'message': 'Please login first.'})
-    my_order = Order.objects.filter(user=request.user)
-
-    context = {
-        'my_orders' : my_order
-    }
-    return render(request, 'orders/my_orders.html', context)
-
-
-# Order Details URL
-def orderDetails(request):
-    order_id = request.GET.get('orderid')
-    order_item = Item.objects.filter(item_order_id=order_id)
-    order_item_length = Item.objects.filter(item_order_id=order_id).count()
-
-    order_item_response = serializers.serialize("json", order_item)
-
-    return HttpResponse(order_item_response, content_type='application/json')

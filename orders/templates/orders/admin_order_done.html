@@ -45,10 +45,10 @@
 <div id="body_content" class="form-group">
     <div>
         <div id="order_main">
-            <div id="order_placed_choosen">
+            <div id="order_placed">
                 <h3><a id="order_placed_text" href="/adminOrder/placed">A List of Placed Orders</a></h3>
             </div>
-            <div id="order_delivered">
+            <div id="order_delivered_choosen">
                 <h3><a id="order_delivered_text" href="/adminOrder/delivered">A List of Delivered Orders</a></h3>
             </div>
             <div>
@@ -80,10 +80,10 @@
         </div>
         <div id="order_cart">
             <div>
-                <p id="total_price">Change Order Status to Delivered</p>
+                <p id="total_price">Change Order Status to Order Placed</p>
             </div>
             <div id="checkout_button">
-                <input class="btn btn-danger" type="button" value="Change" onclick="changeOrderStatus(`Delivered`, `{{ order_length }}`)"/>
+                <input class="btn btn-danger" type="button" value="Change" onclick="changeOrderStatus(`Order Placed`, `{{ order_length }}`)"/>
             </div>
         </div>
     </div>

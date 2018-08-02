@@ -133,7 +133,41 @@
     margin-left: 36%;
 }
 
-#order_title, #checkout_title {
+#checkout_title {
+    margin-left: 15px;
+}
+
+#order_placed_choosen {
+    display: block;
+    float: left;
+    width: 50%;
+}
+
+#order_delivered {
+    display: block;
+    float: right;
+    width: 50%;
+    background-color: #e0e0e0;
+}
+
+#order_placed {
+    display: block;
+    float: left;
+    width: 50%;
+    background-color: #e0e0e0;
+}
+
+#order_delivered_choosen {
+    display: block;
+    float: right;
+    width: 50%;
+}
+
+#order_placed_text {
+    margin-left: 15px;
+}
+
+#order_delivered_text {
     margin-left: 15px;
 }
 
@@ -202,6 +236,10 @@
     float: right;
     font-size: 28px;
     font-weight: bold;
+}
+
+#topping_message {
+    margin-bottom: 20px;
 }
 
 #checkout_main {

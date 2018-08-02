@@ -45,65 +45,75 @@ function checkoutCart(order_price){
 };
 
 function addPizzaToppings(item_type, item_name, item_price, item_size, topping_size) {
-    // Get the modal
-    var modal = document.getElementById('pizzaModal');
 
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
+    if (topping_size == 0) {
+        addToCart(item_type, item_name, item_price, item_size, '', '');
+    } else {
+        // Get the modal
+        var modal = document.getElementById('pizzaModal');
 
-    // When the user clicks on the button, open the modal
-    modal.style.display = "block";
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
 
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-        modal.style.display = "none";
-        location.reload();
-    }
+        // When the user clicks on the button, open the modal
+        modal.style.display = "block";
 
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
             modal.style.display = "none";
             location.reload();
         }
-    }
 
-    //If number of checked checkboxes are equal to the number of toppings, deny checking current checkbox
-    $(document).ready(function() {
-        $('input.topping_check').on('change', function(evt) {
-            if ($(this).siblings(':checked').length == topping_size) {
-                this.checked = false;
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                location.reload();
             }
-        });
-    });
-
-    var select_button = document.querySelector('#topping_complete');
-    var total_topping_length = document.querySelector('#total_topping_length').innerHTML;
-
-    select_button.onclick = function() {
-        var unchecked_length = $("input:checkbox[class=topping_check]:not(:checked)").length;
-        var checked_length = total_topping_length - unchecked_length;
-
-        if (topping_size > 0) {
-            if (checked_length != topping_size) {
-                alert("Please select " + topping_size + " toppings.");
-            } else {
-                var final_toppings = new Array();
-                var checked = document.querySelector('.topping_check:checked').value;
-
-                $(document).ready(function() {
-                    $("input:checkbox[class=topping_check]:checked").each(function(){
-                        final_toppings = final_toppings + $(this).val() + ', ';
-                    });
-                });
-                final_toppings = final_toppings.substring(0, final_toppings.length - 2);
-            }
-        } else {
-            final_toppings = "";
         }
 
-        addToCart(item_type, item_name, item_price, item_size, final_toppings, '');
-    }
+        const topping_message = document.createElement('h4');
+        topping_message.innerHTML = "Please select " + topping_size + " toppings.";
+
+        document.querySelector('#topping_message').append(topping_message);
+
+        //If number of checked checkboxes are equal to the number of toppings, deny checking current checkbox
+        $(document).ready(function() {
+            $('input.topping_check').on('change', function(evt) {
+                if ($(this).siblings(':checked').length == topping_size) {
+                    this.checked = false;
+                }
+            });
+        });
+
+        var select_button = document.querySelector('#topping_complete');
+        var total_topping_length = document.querySelector('#total_topping_length').innerHTML;
+
+        select_button.onclick = function() {
+            var unchecked_length = $("input:checkbox[class=topping_check]:not(:checked)").length;
+            var checked_length = total_topping_length - unchecked_length;
+
+            if (topping_size > 0) {
+                if (checked_length != topping_size) {
+                    alert("Please select " + topping_size + " toppings.");
+                } else {
+                    var final_toppings = new Array();
+                    var checked = document.querySelector('.topping_check:checked').value;
+
+                    $(document).ready(function() {
+                        $("input:checkbox[class=topping_check]:checked").each(function(){
+                            final_toppings = final_toppings + $(this).val() + ', ';
+                        });
+                    });
+                    final_toppings = final_toppings.substring(0, final_toppings.length - 2);
+                }
+            } else {
+                final_toppings = "";
+            }
+
+            addToCart(item_type, item_name, item_price, item_size, final_toppings, '');
+        }
+    };
 };
 
 function addSubsToppings(item_type, item_name, item_price, item_size, topping_size) {
