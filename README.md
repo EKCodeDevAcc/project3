@@ -16,6 +16,9 @@ index.js
 style.css
 - It is css file for basic design of this website.
 
+forms.py
+- Extension of UserCreationForm that requires users to input their first name, last name and email address when they sign up.
+
 views.py
 - It is backend side codes.
 - It checks user status like logged in status, whether superuser or not.
