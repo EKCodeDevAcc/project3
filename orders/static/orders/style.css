@@ -10,12 +10,19 @@
     float: right;
 }
 
+#advertisement_index {
+    margin-top: 60px;
+    display: block;
+    float: left;
+}
+
 #menu {
     background-color: #dc3545;
     border-radius: 15px;
     margin-top: 30px;
     margin-bottom: 30px;
     width: 100%;
+    display: block;
     float: right;
 }
 
@@ -67,6 +74,16 @@
     float: left;
 }
 
+#list_main {
+    width: 100%;
+    height: 700px;
+    display: block;
+    float: left;
+    border-style: solid;
+    border-color: #218838;
+    border-radius: 18px;
+    overflow: auto;
+}
 
 #order_main {
     width: 70%;
@@ -120,6 +137,15 @@
     margin-left: 15px;
 }
 
+.order_type_list {
+    width: 90%;
+    display: block;
+    float: left;
+    margin-left: 15px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
 .order_item {
     width: 30%;
     display: block;
@@ -165,10 +191,10 @@
 
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto;
+    margin: 5% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 65%;
 }
 
 .close {

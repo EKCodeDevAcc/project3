@@ -99,13 +99,9 @@ def menuView(request):
 def orderView(request):
     if not request.user.is_authenticated:
         return render(request, 'orders/login.html', {'message': 'Please login first.'})
-    regular_pizza_menu = Menu.objects.filter(menu_type='Regular Pizza', menu_size='Small').only('menu_name')
-    regular_pizza_small = Menu.objects.filter(menu_type='Regular Pizza', menu_size='Small').only('menu_price')
-    regular_pizza_large = Menu.objects.filter(menu_type='Regular Pizza', menu_size='Large').only('menu_price')
+    my_order = Item.objects.filter(username=request.user, item_status='In Cart')
     context = {
-        'regular_pizza_menus' : regular_pizza_menu,
-        'regular_pizza_smalls': regular_pizza_small,
-        'regular_pizza_larges': regular_pizza_large
+        'my_orders' : my_order
     }
     return render(request, 'orders/order.html', context)
 
@@ -132,7 +128,7 @@ def orderPastaView(request):
     if not request.user.is_authenticated:
         return render(request, 'orders/login.html', {'message': 'Please login first.'})
     pasta_menu = Menu.objects.filter(menu_type='Pasta')
-    my_order = Item.objects.filter(username=request.user)
+    my_order = Item.objects.filter(username=request.user, item_status='In Cart')
     context = {
         'pasta_menus' : pasta_menu,
         'my_orders' : my_order
@@ -148,6 +144,14 @@ def addCart(request):
     item_topping_sub = request.GET.get('itemsubtopping')
     item_size = request.GET.get('itemsize')
     item_price = request.GET.get('itemprice')
+
+    print('HERE')
+    print(item_type)
+    print(item_name)
+    print(item_topping_pizza)
+    print(item_topping_sub)
+    print(item_size)
+    print(item_price)
 
     item = Item.objects.create(username=request.user, item_type=item_type, item_menu_name=item_name, topping_pizza=item_topping_pizza, topping_sub=item_topping_sub, item_size=item_size, item_price=item_price, item_status='In Cart')
 

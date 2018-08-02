@@ -44,7 +44,7 @@
 </div>
 <div id="body_content" class="form-group">
     <div>
-        <div id="order_main">
+        <div id="list_main">
             <h2 id="order_title">A List of Orders</h2>
             <div>
                 <div id="all_orders">
@@ -69,14 +69,6 @@
                 <div class="checkout_item_right">
                 </div>
                 <div id="{{ my_order.id }}"></div>
-            </div>
-        </div>
-        <div id="order_cart">
-            <div>
-                <p id="total_price">Change Order Status to Delievered</p>
-            </div>
-            <div id="checkout_button">
-                <input class="btn btn-danger" type="button" value="Change" onclick="changeOrderStatus(`Delievered`, `{{ order_length }}`)"/>
             </div>
         </div>
     </div>

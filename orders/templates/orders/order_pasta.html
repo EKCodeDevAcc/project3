@@ -27,11 +27,10 @@
         <div id="order_main">
             <h2 id="order_title">Pasta</h2>
             {% for pasta_menu in pasta_menus %}
-            <div id="order_item">
-                <h3>{{ pasta_menu.menu_name }}</h3>
-                <h3>$ {{ pasta_menu.menu_price }}</h3>
-                <h3>{{ pasta_menu.menu_size }}</h3>
-                <input class="btn btn-success" type="button" value="Select" onclick="addToCart(`{{ pasta_menu.menu_name }}`, `{{ pasta_menu.menu_price }}`, `{{ pasta_menu.menu_size }}`, ``, ``)" />
+            <div class="order_item">
+                <h4>{{ pasta_menu.menu_name }}</h4>
+                <h4>$ {{ pasta_menu.menu_price }}</h4>
+                <input class="btn btn-success" type="button" value="Select" onclick="addToCart(`{{ pasta_menu.menu_type }}`, `{{ pasta_menu.menu_name }}`, `{{ pasta_menu.menu_price }}`, ``, ``, ``)" />
             </div>
             {% endfor %}
         </div>
@@ -44,21 +43,21 @@
                 </table>
             </div>
             <div id="checkout_button">
-                <input class="btn btn-danger" type="button" value="Checkout" />
+                <input class="btn btn-danger" type="button" value="Checkout" onclick="window.location='/order/checkout';" />
             </div>
             <div id="my_item">
                 {% for my_order in my_orders %}
                 <div>
-                    <div>
+                    <div class="my_item_list_left">
                         <div>{{ my_order.item_menu_name }}</div>
                         <div>{{ my_order.topping_pizza }}</div>
                         <div>{{ my_order.topping_sub }}</div>
                     </div>
-                    <div>
+                    <div class="my_item_list_right">
                         <div>{{ my_order.item_size }}</div>
                         <div>$ {{ my_order.item_price }}</div>
                     </div>
-                    <div>
+                    <div class="my_item_remove">
                         <input class="btn btn-btn btn-secondary" type="button" value="Remove" onclick="removeCart(`{{ my_order.id }}`)" />
                     </div>
                     <div id="{{ my_order.id }}"></div>

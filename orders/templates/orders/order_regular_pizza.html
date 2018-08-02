@@ -25,6 +25,7 @@
 <div id="pizzaModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
+        <p></p>
         {% for pizza_topping in pizza_toppings %}
         <input type="checkbox" class="topping_check" value="{{ pizza_topping.pizza_topping_name }}">{{ pizza_topping.pizza_topping_name }}
         {% endfor %}
