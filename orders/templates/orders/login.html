@@ -8,6 +8,7 @@
     </div>
 {% endif %}
 <form action="{% url 'login' %}" method="post">
+    <!-- Basic login form with sign up page link -->
     {% csrf_token %}
     <div class="content_item">
         <input name="username" type="text" placeholder="username"/>

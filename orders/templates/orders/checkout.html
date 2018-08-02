@@ -24,6 +24,7 @@
 </div>
 <div id="body_content" class="form-group">
     <div>
+        <!-- Display a list of items in the cart before user checkouts -->
         <div id="order_main">
             <h2 id="order_title">Checkout</h2>
             {% for my_order in my_orders %}
@@ -44,10 +45,12 @@
             {% endfor %}
         </div>
         <div id="order_cart">
+            <!-- Display final total price -->
             <div>
                 <p id="total_price">Your total is ${{ total_price }}.</p>
             </div>
             <div id="checkout_button">
+                <!-- Trigger checkoutCart function which creates new order -->
                 <input class="btn btn-danger" type="button" value="Place Order" onclick="checkoutCart(`{{ total_price }}`)"/>
             </div>
         </div>

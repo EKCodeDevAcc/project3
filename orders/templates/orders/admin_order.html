@@ -22,26 +22,6 @@
         </table>
     </div>
 </div>
-<div id="orderModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <div>
-            <table id="order_details" class="table">
-                <tr>
-                    <th>Type</th>
-                    <th>Name</th>
-                    <th>Size</th>
-                    <th>Toppings</th>
-                    <th>Price</th>
-                    <th>Status</th>
-                </tr>
-            </table>
-        </div>
-        <div id="order_total_price">
-
-        </div>
-    </div>
-</div>
 <div id="body_content" class="form-group">
     <div>
         <div id="order_main">
@@ -83,6 +63,7 @@
                 <p id="total_price">Change Order Status to Delivered</p>
             </div>
             <div id="checkout_button">
+                <!-- Trigger changeOrderStatus which will change status of choosen orders as Order Placed -->
                 <input class="btn btn-danger" type="button" value="Change" onclick="changeOrderStatus(`Delivered`, `{{ order_length }}`)"/>
             </div>
         </div>

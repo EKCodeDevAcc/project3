@@ -27,6 +27,7 @@
         <span class="close">&times;</span>
         <p></p>
         {% for sub_topping in sub_toppings %}
+        <!-- Depends on menu, checkbox will be display and hidden -->
         <input type="checkbox" id="{{ sub_topping.sub_topping_name }}" class="sub_topping_check" value="{{ sub_topping.sub_topping_name }}">
         <p id="p_{{ sub_topping.sub_topping_name }}">{{ sub_topping.sub_topping_name }}</p>
         {% endfor %}

@@ -26,6 +26,7 @@
     <div>
         <div id="order_main">
             <h2 id="order_title">Place Order</h2>
+            <!-- Links to each menu order pages -->
             <div class="order_type_list">
                 <h3><a href="/order/regularPizza">Build Your Own Regular Pizza</a></h3>
                 <h3><a href="/order/sicilianPizza">Build Your Own Sicilian Pizza</a></h3>
@@ -35,6 +36,7 @@
                 <h3><a href="/order/dinnerPlatters">Dinner Platters</a></h3>
             </div>
         </div>
+        <!-- Display list of items in current cart -->
         <div id="order_cart">
             <div id="my_order_menu">
                 <table id="menu_table">
@@ -44,6 +46,7 @@
                 </table>
             </div>
             <div id="checkout_button">
+                <!-- Link to final checkout page -->
                 <input class="btn btn-danger" type="button" value="Checkout" onclick="window.location='/order/checkout';" />
             </div>
             <div id="my_item">
@@ -59,6 +62,7 @@
                         <div>$ {{ my_order.item_price }}</div>
                     </div>
                     <div class="my_item_remove">
+                        <!-- Trigger removeCart function -->
                         <input class="btn btn-btn btn-secondary" type="button" value="Remove" onclick="removeCart(`{{ my_order.id }}`)" />
                     </div>
                     <div id="{{ my_order.id }}"></div>

@@ -22,11 +22,12 @@
         </table>
     </div>
 </div>
+<!-- Pizza topping modals when user have to select toppings for pizza -->
 <div id="pizzaModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
+        <!-- Display how mnay toppings user have to select -->
         <div id="topping_message">
-
         </div>
         {% for pizza_topping in pizza_toppings %}
         <input type="checkbox" class="topping_check" value="{{ pizza_topping.pizza_topping_name }}">
@@ -45,6 +46,7 @@
                 <h4>{{ regular_pizza_menu.menu_name }}</h4>
                 <h4>{{ regular_pizza_menu.menu_size }}</h4>
                 <h4>$ {{ regular_pizza_menu.menu_price }}</h4>
+                <!-- Trigger addPizzaToppings which opens the modal above -->
                 <input class="btn btn-success" type="button" value="Select" onclick="addPizzaToppings(`{{ regular_pizza_menu.menu_type }}`,
                 `{{ regular_pizza_menu.menu_name }}`, `{{ regular_pizza_menu.menu_price }}`, `{{ regular_pizza_menu.menu_size }}`, `{{ regular_pizza_menu.menu_topping_number }}`)" />
             </div>

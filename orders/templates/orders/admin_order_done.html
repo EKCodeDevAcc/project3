@@ -22,32 +22,14 @@
         </table>
     </div>
 </div>
-<div id="orderModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <div>
-            <table id="order_details" class="table">
-                <tr>
-                    <th>Type</th>
-                    <th>Name</th>
-                    <th>Size</th>
-                    <th>Toppings</th>
-                    <th>Price</th>
-                    <th>Status</th>
-                </tr>
-            </table>
-        </div>
-        <div id="order_total_price">
-
-        </div>
-    </div>
-</div>
 <div id="body_content" class="form-group">
     <div>
         <div id="order_main">
+            <!-- Show the admin currently in placed order page -->
             <div id="order_placed">
                 <h3><a id="order_placed_text" href="/adminOrder/placed">A List of Placed Orders</a></h3>
             </div>
+            <!-- Change background color to gray -->
             <div id="order_delivered_choosen">
                 <h3><a id="order_delivered_text" href="/adminOrder/delivered">A List of Delivered Orders</a></h3>
             </div>
@@ -68,6 +50,7 @@
                             <td>{{ all_order.order_date }}</td>
                             <td>$ {{ all_order.order_price }}</td>
                             <td>{{ all_order.order_status }}</td>
+                            <!-- checkbox to get id of selected order -->
                             <td><input type="checkbox" class="change_order_status" value="{{ all_order.id }}"></td>
                         </tr>
                         {% endfor %}
@@ -83,6 +66,7 @@
                 <p id="total_price">Change Order Status to Order Placed</p>
             </div>
             <div id="checkout_button">
+                <!-- Trigger changeOrderStatus which will change status of choosen orders as Order Placed -->
                 <input class="btn btn-danger" type="button" value="Change" onclick="changeOrderStatus(`Order Placed`, `{{ order_length }}`)"/>
             </div>
         </div>

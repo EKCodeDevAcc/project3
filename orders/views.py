@@ -13,12 +13,14 @@ from .models import Menu, PizzaTopping, SubTopping, Order, Item
 
 # Create your views here.
 def index(request):
+    # If user is not logged in, redirect him/her to login page.
     if not request.user.is_authenticated:
         return render(request, 'orders/login.html')
     return render(request, 'orders/index.html')
 
 # Sign Up Page.
 def signUp(request):
+    # If user is logged in, redirect him/her to main page with message.
     if request.user.is_authenticated:
         return render(request, 'orders/index.html', {'message': 'To sign up, you have to logout first.'})
     if request.method == 'POST':
@@ -33,11 +35,10 @@ def signUp(request):
         form = UserCreationForm()
     return render(request, 'orders/signUp.html', {'form': form})
 
-
 # Login Page.
 def loginView(request):
     if request.user.is_authenticated:
-        return render(request, 'orders/index.html', {'message': 'You already login.'})
+        return render(request, 'orders/index.html', {'message': 'You already logged in.'})
     username = request.POST.get('username')
     password = request.POST.get('password')
     user = authenticate(request, username=username, password=password)
@@ -47,19 +48,17 @@ def loginView(request):
     else:
         return render(request, 'orders/login.html', {'message': 'Invalid credentials.'})
 
-
 # Logout
 def logoutView(request):
     logout(request)
     return render(request, 'orders/login.html', {'message': 'You are logged out successfully.'})
 
-
 # Checkout Page
 def myOrdersView(request):
     if not request.user.is_authenticated:
         return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    # A list of orders belong to the current user.
     my_order = Order.objects.filter(user=request.user)
-
     context = {
         'my_orders' : my_order
     }
@@ -68,12 +67,11 @@ def myOrdersView(request):
 
 # Order Details URL
 def orderDetails(request):
+    # Get id of selected order and get a list of items where its order id matches.
     order_id = request.GET.get('orderid')
     order_item = Item.objects.filter(item_order_id=order_id)
     order_item_length = Item.objects.filter(item_order_id=order_id).count()
-
     order_item_response = serializers.serialize("json", order_item)
-
     return HttpResponse(order_item_response, content_type='application/json')
 
 
@@ -81,6 +79,7 @@ def orderDetails(request):
 def menuView(request):
     if not request.user.is_authenticated:
         return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    # To distinguish items depends on their menu type and size, get multiple objects and passed.
     regular_pizza_menu = Menu.objects.filter(menu_type='Regular Pizza', menu_size='Small').only('menu_name')
     regular_pizza_small = Menu.objects.filter(menu_type='Regular Pizza', menu_size='Small').only('menu_price')
     regular_pizza_large = Menu.objects.filter(menu_type='Regular Pizza', menu_size='Large').only('menu_price')
@@ -122,6 +121,7 @@ def menuView(request):
 def orderView(request):
     if not request.user.is_authenticated:
         return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    # Get a list of items that user put in the cart, but not checkout yet.
     my_order = Item.objects.filter(username=request.user, item_status='In Cart')
     context = {
         'my_orders' : my_order
@@ -133,8 +133,10 @@ def orderView(request):
 def orderRegularPizzaView(request):
     if not request.user.is_authenticated:
         return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    # Get a list of regular pizza menus.
     regular_pizza_menu = Menu.objects.filter(menu_type='Regular Pizza')
     my_order = Item.objects.filter(username=request.user, item_status='In Cart')
+    # Get a list of pizza toppings.
     pizza_topping = PizzaTopping.objects.all()
     pizza_topping_length = PizzaTopping.objects.all().count()
     context = {
@@ -150,6 +152,7 @@ def orderRegularPizzaView(request):
 def orderSicilianPizzaView(request):
     if not request.user.is_authenticated:
         return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    # Get a list of sicilian pizza menus.
     sicilian_pizza_menu = Menu.objects.filter(menu_type='Sicilian Pizza')
     my_order = Item.objects.filter(username=request.user, item_status='In Cart')
     pizza_topping = PizzaTopping.objects.all()
@@ -167,8 +170,10 @@ def orderSicilianPizzaView(request):
 def orderSubsView(request):
     if not request.user.is_authenticated:
         return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    # Get a list of subs menus.
     subs_menu = Menu.objects.filter(menu_type='Subs')
     my_order = Item.objects.filter(username=request.user, item_status='In Cart')
+    # Get a list of subs toppoings.
     sub_topping = SubTopping.objects.all()
     sub_topping_length = SubTopping.objects.all().count()
     context = {
@@ -184,6 +189,7 @@ def orderSubsView(request):
 def orderPastaView(request):
     if not request.user.is_authenticated:
         return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    # Get a list of pasta menus.
     pasta_menu = Menu.objects.filter(menu_type='Pasta')
     my_order = Item.objects.filter(username=request.user, item_status='In Cart')
     context = {
@@ -197,6 +203,7 @@ def orderPastaView(request):
 def orderSaladsView(request):
     if not request.user.is_authenticated:
         return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    # Get a list of salads menus.
     salads_menu = Menu.objects.filter(menu_type='Salads')
     my_order = Item.objects.filter(username=request.user, item_status='In Cart')
     context = {
@@ -210,6 +217,7 @@ def orderSaladsView(request):
 def orderDinnerPlattersView(request):
     if not request.user.is_authenticated:
         return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    # Get a list of dinner platters menus.
     dinner_platters_menu = Menu.objects.filter(menu_type='Dinner Platters')
     my_order = Item.objects.filter(username=request.user, item_status='In Cart')
     context = {
@@ -221,52 +229,38 @@ def orderDinnerPlattersView(request):
 
 # Add Cart URL
 def addCart(request):
+    # When a user select an item to put it in his/her cart, get information of the menu and create it as an item.
     item_type = request.GET.get('itemtype')
     item_name = request.GET.get('itemname')
     item_topping_pizza = request.GET.get('itempizzatopping')
     item_topping_sub = request.GET.get('itemsubtopping')
     item_size = request.GET.get('itemsize')
     item_price = request.GET.get('itemprice')
-
-    print('HERE')
-    print(item_type)
-    print(item_name)
-    print(item_topping_pizza)
-    print(item_topping_sub)
-    print(item_size)
-    print(item_price)
-
     item = Item.objects.create(username=request.user, item_type=item_type, item_menu_name=item_name, topping_pizza=item_topping_pizza, topping_sub=item_topping_sub, item_size=item_size, item_price=item_price, item_status='In Cart')
-
     return JsonResponse({'item_name': item_name, 'topping_pizza': item_topping_pizza, 'topping_sub': item_topping_sub, 'item_size':item_size, 'item_price': item_price})
 
 
 # Remove Cart URL
 def removeCart(request):
+    # Get id of selected item from the cart and delete it from db.
     item_id = request.GET.get('itemid')
     Item.objects.get(id=item_id).delete()
     my_order = Item.objects.filter(username=request.user, item_status='In Cart')
     order_length = Item.objects.filter(username=request.user, item_status='In Cart').count()
-
-    total_price = 0
-    for i in range(order_length):
-            total_price += my_order[i].item_price
-
-    round_price = round(total_price, 2)
-    two_decimal = "{:.2f}".format(round_price)
-
-    return JsonResponse({'deleted_item_id': item_id, 'total_price': two_decimal})
+    return JsonResponse({'deleted_item_id': item_id})
 
 
 # Checkout Cart URL
 def checkoutCart(request):
+    # When a user checkouts, create new order object.
     order_price = request.GET.get('orderprice')
     now = datetime.datetime.now()
     order = Order.objects.create(user=request.user, order_date=now, order_status='Order Placed', order_price=order_price)
+    # Get id of lastest order.
     lastest_order = Order.objects.latest('id')
     order_id = lastest_order.id
+    # Update order id and status of items in current user's cart.
     item = Item.objects.filter(username=request.user, item_status='In Cart').update(item_order_id=order_id, item_status='Order Placed')
-
     return JsonResponse({'order_stats': 'Complete'})
 
 
@@ -276,14 +270,12 @@ def checkoutView(request):
         return render(request, 'orders/login.html', {'message': 'Please login first.'})
     my_order = Item.objects.filter(username=request.user, item_status='In Cart')
     order_length = Item.objects.filter(username=request.user, item_status='In Cart').count()
-
+    # Get prices of all menus in the cart, and add all prices.
     total_price = 0
     for i in range(order_length):
             total_price += my_order[i].item_price
-
     round_price = round(total_price, 2)
     two_decimal = "{:.2f}".format(round_price)
-
     context = {
         'my_orders' : my_order,
         'total_price': two_decimal
@@ -297,9 +289,9 @@ def checkoutView(request):
 def adminOrderView(request):
     if not request.user.is_authenticated:
         return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    # Display all orders whose status are Order Placed.
     all_order = Order.objects.filter(order_status='Order Placed')
     order_length = Order.objects.filter(order_status='Order Placed').count()
-
     context = {
         'all_orders' : all_order,
         'order_length' : order_length
@@ -312,9 +304,9 @@ def adminOrderView(request):
 def adminOrderDeliveredView(request):
     if not request.user.is_authenticated:
         return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    # Display all orders whose status are Delivered.
     all_order = Order.objects.filter(order_status='Delivered')
     order_length = Order.objects.filter(order_status='Delivered').count()
-
     context = {
         'all_orders' : all_order,
         'order_length' : order_length
@@ -326,11 +318,10 @@ def adminOrderDeliveredView(request):
 def changeOrderStatus(request):
     order_status = request.GET.get('orderstatus')
     final_orders = request.GET.get('finalorders')
-
+    # Get a list of choosen ids.
     id_list = [id.strip() for id in final_orders.split(',')]
-
+    # Change status of order and its items depends what admin requested.
     for i in range(len(id_list)):
         Order.objects.filter(id=id_list[i]).update(order_status=order_status)
         Item.objects.filter(item_order_id=id_list[i]).update(item_status=order_status)
-
     return JsonResponse({'order_stats': 'Complete'})

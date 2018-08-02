@@ -22,10 +22,12 @@
         </table>
     </div>
 </div>
+<!-- Modal pops up when user select certain his/her order -->
 <div id="orderModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
         <div>
+            <!-- List of items belong to this order -->
             <table id="order_details" class="table">
                 <tr>
                     <th>Type</th>
@@ -37,8 +39,8 @@
                 </tr>
             </table>
         </div>
+        <!-- Total price comes here -->
         <div id="order_total_price">
-
         </div>
     </div>
 </div>
@@ -61,6 +63,7 @@
                             <td>{{ my_order.order_date }}</td>
                             <td>$ {{ my_order.order_price }}</td>
                             <td>{{ my_order.order_status }}</td>
+                            <!-- Trigger selectOrderDetails function which opens the modal above -->
                             <td><input class="btn btn-success" type="button" value="Check" onclick="selectOrderDetails(`{{ my_order.id }}`)" /></td>
                         </tr>
                         {% endfor %}

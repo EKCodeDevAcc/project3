@@ -11,6 +11,7 @@
     <body>
         <div class="container">
             <h1><a href="/">Edward Kang's Project 3!</a></h1>
+            <!-- Display a link to admin order page only if the current user is a superuser -->
             {% if user.is_superuser %}
             <h3><a href="/adminOrder/placed">Admin Order</a></h3>
             {% endif %}
