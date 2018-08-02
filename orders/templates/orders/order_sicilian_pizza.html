@@ -37,14 +37,14 @@
 <div id="body_content" class="form-group">
     <div>
         <div id="order_main">
-            <h2 id="order_title">Regular Pizza</h2>
-            {% for regular_pizza_menu in regular_pizza_menus %}
+            <h2 id="order_title">Sicilian Pizza</h2>
+            {% for sicilian_pizza_menu in sicilian_pizza_menus %}
             <div class="order_item">
-                <h4>{{ regular_pizza_menu.menu_name }}</h4>
-                <h4>{{ regular_pizza_menu.menu_size }}</h4>
-                <h4>$ {{ regular_pizza_menu.menu_price }}</h4>
-                <input class="btn btn-success" type="button" value="Select" onclick="addPizzaToppings(`{{ regular_pizza_menu.menu_type }}`,
-                `{{ regular_pizza_menu.menu_name }}`, `{{ regular_pizza_menu.menu_price }}`, `{{ regular_pizza_menu.menu_size }}`, `{{ regular_pizza_menu.menu_topping_number }}`)" />
+                <h4>{{ sicilian_pizza_menu.menu_name }}</h4>
+                <h4>{{ sicilian_pizza_menu.menu_size }}</h4>
+                <h4>$ {{ sicilian_pizza_menu.menu_price }}</h4>
+                <input class="btn btn-success" type="button" value="Select" onclick="addPizzaToppings(`{{ sicilian_pizza_menu.menu_type }}`,
+                `{{ sicilian_pizza_menu.menu_name }}`, `{{ sicilian_pizza_menu.menu_price }}`, `{{ sicilian_pizza_menu.menu_size }}`, `{{ sicilian_pizza_menu.menu_topping_number }}`)" />
             </div>
             {% endfor %}
         </div>

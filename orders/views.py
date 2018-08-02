@@ -123,6 +123,40 @@ def orderRegularPizzaView(request):
     return render(request, 'orders/order_regular_pizza.html', context)
 
 
+# Order Sicilian Pizza Page.
+def orderSicilianPizzaView(request):
+    if not request.user.is_authenticated:
+        return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    sicilian_pizza_menu = Menu.objects.filter(menu_type='Sicilian Pizza')
+    my_order = Item.objects.filter(username=request.user, item_status='In Cart')
+    pizza_topping = PizzaTopping.objects.all()
+    pizza_topping_length = PizzaTopping.objects.all().count()
+    context = {
+        'sicilian_pizza_menus' : sicilian_pizza_menu,
+        'pizza_toppings' : pizza_topping,
+        'pizza_topping_length' : pizza_topping_length,
+        'my_orders' : my_order
+    }
+    return render(request, 'orders/order_sicilian_pizza.html', context)
+
+
+# Order Subs Page.
+def orderSubsView(request):
+    if not request.user.is_authenticated:
+        return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    subs_menu = Menu.objects.filter(menu_type='Subs')
+    my_order = Item.objects.filter(username=request.user, item_status='In Cart')
+    sub_topping = SubTopping.objects.all()
+    sub_topping_length = SubTopping.objects.all().count()
+    context = {
+        'subs_menus' : subs_menu,
+        'sub_toppings' : sub_topping,
+        'sub_topping_length' : sub_topping_length,
+        'my_orders' : my_order
+    }
+    return render(request, 'orders/order_subs.html', context)
+
+
 # Order Pasta Page.
 def orderPastaView(request):
     if not request.user.is_authenticated:
@@ -134,6 +168,32 @@ def orderPastaView(request):
         'my_orders' : my_order
     }
     return render(request, 'orders/order_pasta.html', context)
+
+
+# Order Salads Page.
+def orderSaladsView(request):
+    if not request.user.is_authenticated:
+        return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    salads_menu = Menu.objects.filter(menu_type='Salads')
+    my_order = Item.objects.filter(username=request.user, item_status='In Cart')
+    context = {
+        'salads_menus' : salads_menu,
+        'my_orders' : my_order
+    }
+    return render(request, 'orders/order_salads.html', context)
+
+
+# Order Dinner Platters Page.
+def orderDinnerPlattersView(request):
+    if not request.user.is_authenticated:
+        return render(request, 'orders/login.html', {'message': 'Please login first.'})
+    dinner_platters_menu = Menu.objects.filter(menu_type='Dinner Platters')
+    my_order = Item.objects.filter(username=request.user, item_status='In Cart')
+    context = {
+        'dinner_platters_menus' : dinner_platters_menu,
+        'my_orders' : my_order
+    }
+    return render(request, 'orders/order_dinner_platters.html', context)
 
 
 # Add Cart URL

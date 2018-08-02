@@ -1,5 +1,6 @@
 
 function addToCart(item_type, item_name, item_price, item_size, item_pizza_topping, item_sub_topping) {
+
     $.ajax({
         url: '/addCart',
         data: {
@@ -24,10 +25,6 @@ function removeCart(item_id) {
         },
         success: function(data){
             location.reload();
-            /*const removeElement = document.getElementById(data.deleted_item_id)
-            removeElement.parentElement.remove();
-
-            document.querySelector('#total_price').innerHTML = data.total_price;*/
         }
     });
 };
@@ -42,7 +39,7 @@ function checkoutCart(order_price){
         },
         success: function(data){
             alert("Thank you for choosing Pinocchio's Pizza & Subs!");
-            window.location = "/";
+            window.location = "/myOrders";
         }
     });
 };
@@ -96,7 +93,6 @@ function addPizzaToppings(item_type, item_name, item_price, item_size, topping_s
 
                 $(document).ready(function() {
                     $("input:checkbox[class=topping_check]:checked").each(function(){
-                        //final_toppings.push($(this).val());
                         final_toppings = final_toppings + $(this).val() + ', ';
                     });
                 });
@@ -107,6 +103,76 @@ function addPizzaToppings(item_type, item_name, item_price, item_size, topping_s
         }
 
         addToCart(item_type, item_name, item_price, item_size, final_toppings, '');
+    }
+};
+
+function addSubsToppings(item_type, item_name, item_price, item_size, topping_size) {
+
+    var mushrooms = document.getElementById('Mushrooms');
+    var pmushrooms = document.getElementById('p_Mushrooms');
+    var green_peppers = document.getElementById('Green Peppers');
+    var pgreen_peppers = document.getElementById('p_Green Peppers');
+    var onions = document.getElementById('Onions');
+    var ponions = document.getElementById('p_Onions');
+
+    if (item_name != 'Steak + Cheese'){
+        mushrooms.style.display = "none";
+        pmushrooms.style.display = "none";
+        green_peppers.style.display = "none";
+        pgreen_peppers.style.display = "none";
+        onions.style.display = "none";
+        ponions.style.display = "none";
+    }
+
+    // Get the modal
+    var modal = document.getElementById('subsModal');
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal
+    modal.style.display = "block";
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+        location.reload();
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+            location.reload();
+        }
+    }
+
+    var select_button = document.querySelector('#sub_topping_complete');
+    var total_topping_length = document.querySelector('#sub_topping_length').innerHTML;
+
+    select_button.onclick = function() {
+        var unchecked_length = $("input:checkbox[class=sub_topping_check]:not(:checked)").length;
+        var checked_length = total_topping_length - unchecked_length;
+
+        if (checked_length == 0) {
+            final_toppings = "";
+        } else {
+            var final_toppings = new Array();
+            var checked = document.querySelector('.sub_topping_check:checked').value;
+
+            $(document).ready(function() {
+                $("input:checkbox[class=sub_topping_check]:checked").each(function(){
+                    final_toppings = final_toppings + $(this).val() + ', ';
+                });
+            });
+            final_toppings = final_toppings.substring(0, final_toppings.length - 2);
+
+            var extra = checked_length * .5;
+            var float_item = parseFloat(item_price);
+            item_price = float_item + extra;
+        }
+
+        addToCart(item_type, item_name, item_price, item_size, '', final_toppings);
     }
 };
 
