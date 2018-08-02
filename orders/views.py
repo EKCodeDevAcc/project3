@@ -10,6 +10,7 @@ from django.core import serializers
 import datetime
 
 from .models import Menu, PizzaTopping, SubTopping, Order, Item
+from .forms import UserSignUpForm
 
 # Create your views here.
 def index(request):
@@ -24,15 +25,16 @@ def signUp(request):
     if request.user.is_authenticated:
         return render(request, 'orders/index.html', {'message': 'To sign up, you have to logout first.'})
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = UserSignUpForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
+            login(request, user)
             return redirect('index')
     else:
-        form = UserCreationForm()
+        form = UserSignUpForm()
     return render(request, 'orders/signUp.html', {'form': form})
 
 # Login Page.
